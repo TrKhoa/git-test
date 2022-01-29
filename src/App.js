@@ -1,5 +1,6 @@
 import React, { component } from 'react';
 import { Navbar,NavbarBrand } from 'reactstrap';
+import Menu from './components/MenuComponent';
 import logo from './logo.svg';
 import './App.css';
 
@@ -11,6 +12,7 @@ function App() {
 			<NavbarBrand href="#">Ringstone</NavbarBrand>
 		</div>
 	  </Navbar>
+    <Menu />
     </div>
   );
 }
