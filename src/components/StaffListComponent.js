@@ -28,6 +28,9 @@ class StaffList extends Component {
       case 3:
         this.setState({ selectedColumnNumber: "col-3"})
         break;
+      case 6:
+        this.setState({ selectedColumnNumber: "col-1"})
+        break;
       default:
         this.setState({ selectedColumnNumber: "col-12 col-lg-3 col-md-5"})
     }
@@ -64,6 +67,7 @@ class StaffList extends Component {
       <Button onClick={ () => {this.handleColumn(1)}}>1</Button>
       <Button onClick={ () => {this.handleColumn(2)}}>2</Button>
       <Button onClick={ () => {this.handleColumn(3)}}>3</Button>
+      <Button onClick={ () => {this.handleColumn(6)}}>6</Button>
     </div>
        <div className="row">
         { menu }
