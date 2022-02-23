@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText } from 'reactstrap';
+import { Card,CardTitle,CardText, Button } from 'reactstrap';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
@@ -8,7 +8,8 @@ class StaffList extends Component {
     super(props)
 
     this.state = {
-      selectedStaff: null
+      selectedStaff: null,
+      selectedColumnNumber: "col-12 col-lg-3 col-md-5",
     }
   }
 
@@ -16,6 +17,21 @@ class StaffList extends Component {
     this.setState({ selectedStaff: staff});
   }
 
+  handleColumn(prop){
+    switch (prop) {
+      case 1:
+        this.setState({ selectedColumnNumber: "col-12"})
+        break;
+      case 2:
+        this.setState({ selectedColumnNumber: "col-5"})
+        break;
+      case 3:
+        this.setState({ selectedColumnNumber: "col-3"})
+        break;
+      default:
+        this.setState({ selectedColumnNumber: "col-12 col-lg-3 col-md-5"})
+    }
+  }
   renderStaff(staff) {
     if(staff!=null){
       return(
@@ -34,7 +50,7 @@ class StaffList extends Component {
   render(){
     const menu = this.props.staffs.map((staff) => {
       return (
-        <div className="col-12 col-lg-3 col-md-5 m-1">
+        <div id="item" className={ this.state.selectedColumnNumber +" m-1"}>
           <Card key={staff.id} onClick={() => this.onStaffSelect(staff)}>
             <CardTitle>{staff.name}</CardTitle>
           </Card>
@@ -43,6 +59,12 @@ class StaffList extends Component {
     });
   return (
     <div className="container">
+    <div className="text-right">
+      <Button onClick={ () => {this.handleColumn(0)}}>Default</Button>
+      <Button onClick={ () => {this.handleColumn(1)}}>1</Button>
+      <Button onClick={ () => {this.handleColumn(2)}}>2</Button>
+      <Button onClick={ () => {this.handleColumn(3)}}>3</Button>
+    </div>
        <div className="row">
         { menu }
        </div>

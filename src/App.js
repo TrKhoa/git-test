@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffs: STAFFS
+      staffs: STAFFS,
     };
   }
   render(){
@@ -20,7 +20,7 @@ class App extends Component {
             <NavbarBrand href="#">Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
           </div>
         </Navbar>
-        <StaffList staffs={this.state.staffs} />
+        <StaffList column={this.state.column} staffs={this.state.staffs} />
       </div>
     );
   }
