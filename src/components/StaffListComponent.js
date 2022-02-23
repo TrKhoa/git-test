@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText, Button } from 'reactstrap';
+import { Card,CardTitle,CardText,ButtonGroup,Button } from 'reactstrap';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
@@ -59,12 +59,12 @@ class StaffList extends Component {
     });
   return (
     <div className="container">
-    <div className="text-right">
+    <ButtonGroup className="float-right">
       <Button onClick={ () => {this.handleColumn(0)}}>Default</Button>
       <Button onClick={ () => {this.handleColumn(1)}}>1</Button>
       <Button onClick={ () => {this.handleColumn(2)}}>2</Button>
       <Button onClick={ () => {this.handleColumn(3)}}>3</Button>
-    </div>
+    </ButtonGroup>
        <div className="row">
         { menu }
        </div>
