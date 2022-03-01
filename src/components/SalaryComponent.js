@@ -4,27 +4,26 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 
-class StaffList extends Component {
+class SalaryList extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      selectedStaff: null,
-    }
   }
 
-  onStaffSelect(staff) {
-    this.setState({ selectedStaff: staff});
-  }
 
   render(){
     const menu = this.props.staffs.map((staff) => {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Link to={`/nhan-vien/${staff.id}`}><Card key={staff.id} outline="false" onClick={() => this.onStaffSelect(staff)}>
-            <CardImg/>
-            <CardTitle>{staff.name}</CardTitle>
-          </Card></Link>
+          <Card key={staff.id} outline="false" onClick={() => this.onStaffSelect(staff)}>
+            <CardTitle tag="h2">{staff.name}</CardTitle>
+            <CardText className="text-left" tag="h4">
+            Mã nhân viên: {staff.id}<br />
+            Hệ số lương: {staff.salaryScale}<br />
+            Số giờ làm thêm: {staff.overTime}<br />
+            Lương: {parseInt(staff.salaryScale)*3000000+parseInt(staff.overTime)*200000}
+            </CardText>
+          </Card>
         </div>
       );
     });
@@ -37,4 +36,4 @@ class StaffList extends Component {
   );}
 }
 
-export default StaffList;
+export default SalaryList;

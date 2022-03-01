@@ -4,27 +4,19 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 
-class StaffList extends Component {
+class DepartmentList extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      selectedStaff: null,
-    }
-  }
-
-  onStaffSelect(staff) {
-    this.setState({ selectedStaff: staff});
   }
 
   render(){
-    const menu = this.props.staffs.map((staff) => {
+    const menu = this.props.staffs.map((department) => {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Link to={`/nhan-vien/${staff.id}`}><Card key={staff.id} outline="false" onClick={() => this.onStaffSelect(staff)}>
-            <CardImg/>
-            <CardTitle>{staff.name}</CardTitle>
-          </Card></Link>
+          <Card key={department.id} outline="false">
+            <CardTitle>{department.name}</CardTitle>
+          </Card>
         </div>
       );
     });
@@ -37,4 +29,4 @@ class StaffList extends Component {
   );}
 }
 
-export default StaffList;
+export default DepartmentList;
