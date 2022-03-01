@@ -1,6 +1,6 @@
 import './App.css';
 import { Navbar,NavbarBrand,NavLink } from 'reactstrap';
-import { Switch,Route,Link } from 'react-router-dom';
+import { Switch,Route,Link,Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { STAFFS,DEPARTMENTS } from './shared/staffs';
@@ -22,7 +22,7 @@ class App extends Component {
 
     const child=({ match })=> {
       return(
-        <StaffDetail id={match.params.idStaff}/>
+        <StaffDetail staff={this.state.staffs.filter((staff) => staff.id==parseInt(match.params.idStaff))} />
       )
     }
 
@@ -36,10 +36,10 @@ class App extends Component {
         </Navbar>
         <Switch>
         <Route exact path="/" component={()=><StaffList staffs={this.state.staffs}/>} />
+        <Route path="/nhan-vien/:idStaff" component={child} />
         <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
-        <Route path="/phong-ban" component={()=><DepartmentList staffs={this.state.departments}/>} />
+        <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
         <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
-        //<Route path="/nhan-vien/:idStaff" component={child} />
         </Switch>
       </div>
     );

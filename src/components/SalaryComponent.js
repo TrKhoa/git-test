@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText,ButtonGroup,Button,CardImg } from 'reactstrap';
+import { Card,CardTitle,CardText,Breadcrumb,BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,7 +15,7 @@ class SalaryList extends Component {
     const menu = this.props.staffs.map((staff) => {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Card key={staff.id} outline="false" onClick={() => this.onStaffSelect(staff)}>
+          <Card key={staff.id} outline="false">
             <CardTitle tag="h2">{staff.name}</CardTitle>
             <CardText className="text-left" tag="h4">
             Mã nhân viên: {staff.id}<br />
@@ -29,6 +29,18 @@ class SalaryList extends Component {
     });
   return (
     <div>
+    <Breadcrumb listTag="div">
+      <BreadcrumbItem>
+        <Link to="/Nhan-vien">
+          Nhan vien
+        </Link>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        active
+        tag="span">
+          Bang luong
+      </BreadcrumbItem>
+  </Breadcrumb>
        <div className="row">
         { menu }
        </div>

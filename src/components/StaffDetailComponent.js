@@ -5,29 +5,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 
 class StaffDetail extends Component {
-  constructor(props){
-    super(props)
-
-  }
-
   render(){
-    const info = () => {
-      return (
-        <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Card key={this.props.staffs.id}>
-            <CardImg/>
-            <CardTitle>{this.props.staffs.name}</CardTitle>
-          </Card>
+    return (
+      <div>
+        <div className="row">
+          <div id="item" className="col-12 col-lg-2 col-md-5">
+            <Card key="5" outline="false">
+              <CardTitle>{this.props.staff[0].name}</CardTitle>
+            </Card>
+          </div>
         </div>
-      );
-    }
-  return (
-    <div>
-       <div className="row">
-        { info }
-       </div>
-     </div>
-  );}
+      </div>
+    );}
 }
 
 export default StaffDetail;

@@ -11,7 +11,7 @@ class DepartmentList extends Component {
   }
 
   render(){
-    const menu = this.props.staffs.map((department) => {
+    const menu = this.props.departments.map((department) => {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
           <Card key={department.id} outline="false">
