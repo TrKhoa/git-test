@@ -24,12 +24,7 @@ export default function NavigationBar(){
                 <Link className="text-white" to="/bang-luong"><i class="fa fa-money" aria-hidden="true" /> Bảng lương</Link>
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink>
-                <Link className="text-white" to="/bang-luong"><i class="fa fa-sea" aria-hidden="true" /> Bảng lương</Link>
-              </NavLink>
-            </NavItem>
-            </Nav>
+          </Nav>
 
       </Navbar>
   )

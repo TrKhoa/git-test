@@ -9,36 +9,42 @@ class StaffDetail extends Component {
     const staff = this.props.staff[0];
     return (
       <div>
+
+      {/* Tạo phần hiển vị trí hiện tại trên cấu trúc Website*/}
       <Breadcrumb listTag="div">
         <BreadcrumbItem>
           <Link to="/Nhan-vien">
             Nhân viên
           </Link>
         </BreadcrumbItem>
-        <BreadcrumbItem
-          active
-          tag="span">
+        <BreadcrumbItem active tag="span">
+
+          {/* Hiển thị tên nhân viên*/}
             {staff.name}
         </BreadcrumbItem>
-    </Breadcrumb>
+      </Breadcrumb>
         <div className="row">
           <div id="item" className="col-12 col-lg-3 col-md-4">
+
+            {/* Hiển thị hình ảnh nhân viên*/}
             <CardImg src={"../"+staff.image} className="img-fluid" />
           </div>
           <div id="item" className="col-12 col-lg-9 col-md-8">
             <Card body key="5" className="text-left border-0">
-            <CardBody className="col-12 col-md-8 col-lg-9">
-              <CardTitle>{staff.name}</CardTitle>
-              <CardText>
-                Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}<br />
-                Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}<br />
-                Phòng ban: {staff.department.name}<br />
-                Số ngày nghỉ còn lại: {staff.annualLeave}<br />
-                Số ngày đã làm thêm: {staff.overTime}
-              </CardText>
-            </CardBody>
+              <CardBody className="col-12 col-md-8 col-lg-9">
+
+                {/* Hiển thị tên và chi tiết nhân viên*/}
+                <CardTitle>{staff.name}</CardTitle>
+                <CardText>
+                  Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}<br />
+                  Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}<br />
+                  Phòng ban: {staff.department.name}<br />
+                  Số ngày nghỉ còn lại: {staff.annualLeave}<br />
+                  Số ngày đã làm thêm: {staff.overTime}
+                </CardText>
+              </CardBody>
             </Card>
-            </div>
+          </div>
         </div>
       </div>
     );}
