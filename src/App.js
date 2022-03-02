@@ -1,8 +1,7 @@
 import './App.css';
-import image from './assets/images/alberto.png';
 import 'font-awesome/css/font-awesome.min.css';
-import { Navbar,NavbarBrand,NavLink,NavItem,Collapse,Nav } from 'reactstrap';
-import { Switch,Route,Link,Redirect } from 'react-router-dom';
+import { Navbar,NavbarBrand,NavLink,NavItem,Nav } from 'reactstrap';
+import { Switch,Route,Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { STAFFS,DEPARTMENTS } from './shared/staffs';
@@ -26,7 +25,7 @@ class App extends Component {
 
     const child=({ match })=> {
       return(
-        <StaffDetail staff={this.state.staffs.filter((staff) => staff.id==parseInt(match.params.idStaff))} />
+        <StaffDetail staff={this.state.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))} />
       )
     }
 

@@ -1,8 +1,8 @@
 import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React, { Component } from 'react';
+import React, { Component, } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import dateFormat from 'dateformat';
+
 
 const RenderStaff = staff => {
   return (
@@ -23,7 +23,21 @@ const RenderStaff = staff => {
 }
 
 class SalaryList extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = { change:null  };
+  }
+
+  renderByName(){
+      this.props.staffs.slice(0).sort((a,b) =>{
+        if(a.id > b.id){
+          return 1
+        }else {
+          return -1
+        }
+      })
+  }
+
   render(){
   return (
     <div>
@@ -39,6 +53,7 @@ class SalaryList extends Component {
           Bang luong
       </BreadcrumbItem>
     </Breadcrumb>
+    <button onClick={() => this.renderByName()}>here</button>
        <div className="row">
        {this.props.staffs.map(staff =>(
         <RenderStaff

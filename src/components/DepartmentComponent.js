@@ -1,8 +1,6 @@
-import { Card,CardTitle,CardText,CardImg } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Card,CardTitle,CardText } from 'reactstrap';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import dateFormat from 'dateformat';
 
 const RenderDepartment = prop =>{
   return (

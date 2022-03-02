@@ -1,8 +1,7 @@
-import { Card,CardTitle,CardText,ButtonGroup,Button,CardImg } from 'reactstrap';
+import { Card,CardTitle,CardImg } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import dateFormat from 'dateformat';
 
 const RenderStaff = prop =>{
   return (
