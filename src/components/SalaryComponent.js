@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem } from 'reactstrap';
+import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem,Button,ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import React, { Component, } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -25,17 +25,29 @@ const RenderStaff = staff => {
 class SalaryList extends Component {
   constructor(props) {
     super(props);
-    this.state = { change:null  };
+    this.state = { data:this.props.staffs  };
   }
 
-  renderByName(){
-      this.props.staffs.slice(0).sort((a,b) =>{
-        if(a.id > b.id){
+  renderByDefault(){
+      this.props.staffs.sort((a,b) =>{
+        if(a.name > b.name){
           return 1
         }else {
           return -1
         }
       })
+      this.setState({"data":this.props.staffs});
+  }
+
+  renderById(){
+      this.props.staffs.sort((a,b) =>{
+        if(a.id < b.id){
+          return 1
+        }else {
+          return -1
+        }
+      })
+      this.setState({"data":this.props.staffs});
   }
 
   render(){
@@ -44,24 +56,30 @@ class SalaryList extends Component {
     <Breadcrumb listTag="div">
       <BreadcrumbItem>
         <Link to="/Nhan-vien">
-          Nhan vien
+          Nhân viên
         </Link>
       </BreadcrumbItem>
       <BreadcrumbItem
         active
         tag="span">
-          Bang luong
+          Bảng lương
       </BreadcrumbItem>
     </Breadcrumb>
-    <button onClick={() => this.renderByName()}>here</button>
+      <ButtonGroup>
+        <Button onClick={() => this.renderByDefault()}>Mặc định</Button>
+        <Button onClick={() => this.renderById()}><i class="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
+        <Button onClick={() => this.renderById()}>here</Button>
+      </ButtonGroup>
        <div className="row">
-       {this.props.staffs.map(staff =>(
+       {this.state.data.map(staff =>(
+
         <RenderStaff
           id={staff.id}
           name={staff.name}
           salaryScale={staff.salaryScale}
           overTime={staff.overTime}
-        />))
+        />
+      ))
       }
        </div>
      </div>
