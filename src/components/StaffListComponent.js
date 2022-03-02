@@ -1,6 +1,6 @@
-import { Card,CardTitle,CardImg } from 'reactstrap';
+import { Card,CardTitle,CardImg,InputGroup,Input,Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React from 'react';
+import React,{ useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const RenderStaff = prop =>{
@@ -17,18 +17,32 @@ const RenderStaff = prop =>{
 }
 
 export default function StaffList(prop){
-
+  const [search,setSearch] = useState("")
   return (
     <div>
-       <div className="row">
-       { prop.staffs.map(data =>(
+    <div className="col-12 bg-primary pb-2">
+      <InputGroup className="col-md-3">
+      <Button>
+        Tìm
+      </Button>
+        <Input onChange={(event) => {setSearch(event.target.value)}} />
+      </InputGroup>
+    </div>
+     <div className="row">
+       { prop.staffs.filter((val) => {
+         if(search==""){
+           return val
+         } else if (val.name.toLowerCase().includes(search.toLowerCase())){
+           return val
+         }
+       }).map(data =>(
          <RenderStaff
           id={data.id}
           image={data.image}
           name={data.name}
          />
        ))}
-       </div>
+     </div>
      </div>
   )
 }

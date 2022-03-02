@@ -1,10 +1,10 @@
 import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
-import { Navbar,NavbarBrand,NavLink,NavItem,Nav } from 'reactstrap';
-import { Switch,Route,Link } from 'react-router-dom';
+import { Switch,Route } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { STAFFS,DEPARTMENTS } from './shared/staffs';
+import NavigationBar from './components/NavbarComponent';
 import StaffList from './components/StaffListComponent';
 import StaffDetail from './components/StaffDetailComponent';
 import DepartmentList from './components/DepartmentComponent';
@@ -31,39 +31,14 @@ class App extends Component {
 
     return (
       <div className="App container-xl ">
-        <Navbar color="primary" expand="md" dark>
-            <NavbarBrand>
-              <Link className="text-white" to="/">Khoa</Link>
-            </NavbarBrand>
-
-              <Nav className="me-auto" navbar>
-                <NavItem>
-                  <NavLink>
-                    <Link className="text-white" to="/nhan-vien"><i class="fa fa-users" aria-hidden="true" /> Nhân viên</Link>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink>
-                    <Link className="text-white" to="/phong-ban"><i class="fa fa-id-card" aria-hidden="true" /> Phòng ban</Link>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink>
-                    <Link className="text-white" to="/bang-luong"><i class="fa fa-money" aria-hidden="true" /> Bảng lương</Link>
-                  </NavLink>
-                </NavItem>
-                </Nav>
-
-          </Navbar>
-
+        <NavigationBar />
         <Switch>
-        <Route exact path="/" component={()=><StaffList staffs={this.state.staffs}/>} />
-        <Route path="/nhan-vien/:idStaff" component={child} />
-        <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
-        <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
-        <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
+          <Route exact path="/" component={()=><StaffList staffs={this.state.staffs}/>} />
+          <Route path="/nhan-vien/:idStaff" component={child} />
+          <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
+          <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
+          <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
         </Switch>
-
         <Footer />
       </div>
     );
