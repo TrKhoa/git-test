@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer(){
   return(
-    <footer className="bg-primary clear-top pt-5 pb-4 px-auto">
+    <footer className="bg-primary mt-5 pt-5 pb-4 px-auto">
       <div className="container">
         <div className="row text-left">
 
@@ -22,6 +22,9 @@ function Footer(){
             <i class="fa fa-envelope-o fa-3x" aria-hidden="true" />
           </div>
 
+        </div>
+        <div className="row justify-content-center">
+        <p>Copyright: Trần Mạc Tư Khoa</p>
         </div>
       </div>
     </footer>

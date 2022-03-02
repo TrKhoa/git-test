@@ -4,27 +4,30 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 
-class DepartmentList extends Component {
-  constructor(props){
-    super(props)
+const RenderDepartment = prop =>{
+  return (
+    <div id="item" className="col-12 col-lg-3 col-md-5 m-lg-2">
+      <Card body key={prop.id} outline="false">
+        <CardTitle tag="h3">{prop.name}</CardTitle>
+        <CardText className="text-left">Số lượng nhân viên:{prop.numberOfStaff}</CardText>
+      </Card>
+    </div>
+  );
+}
 
-  }
+class DepartmentList extends Component {
 
   render(){
-    const menu = this.props.departments.map((department) => {
-      return (
-        <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Card body key={department.id} outline="false">
-            <CardTitle tag="h3">{department.name}</CardTitle>
-            <CardText className="text-left">Số lượng nhân viên:{department.numberOfStaff}</CardText>
-          </Card>
-        </div>
-      );
-    });
   return (
     <div>
        <div className="row">
-        { menu }
+       { this.props.departments.map(data => (
+         <RenderDepartment
+          id={data.id}
+          name={data.name}
+          numberOfStaff={data.numberOfStaff}
+         />
+       ))}
        </div>
      </div>
   );}

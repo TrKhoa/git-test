@@ -36,7 +36,7 @@ class App extends Component {
             <NavbarBrand>
               <Link className="text-white" to="/">Khoa</Link>
             </NavbarBrand>
-            <Collapse navbar>
+
               <Nav className="me-auto" navbar>
                 <NavItem>
                   <NavLink>
@@ -54,7 +54,7 @@ class App extends Component {
                   </NavLink>
                 </NavItem>
                 </Nav>
-            </Collapse>
+
           </Navbar>
 
         <Switch>
