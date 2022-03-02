@@ -1,5 +1,6 @@
 import './App.css';
-import image from './assets/images/alberto.png'
+import image from './assets/images/alberto.png';
+import 'font-awesome/css/font-awesome.min.css';
 import { Navbar,NavbarBrand,NavLink,NavItem,Collapse,Nav } from 'reactstrap';
 import { Switch,Route,Link,Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
@@ -9,6 +10,8 @@ import StaffList from './components/StaffListComponent';
 import StaffDetail from './components/StaffDetailComponent';
 import DepartmentList from './components/DepartmentComponent';
 import SalaryList from './components/SalaryComponent';
+import Footer from './components/FooterComponent';
+
 
 class App extends Component {
   constructor(props) {
@@ -28,30 +31,26 @@ class App extends Component {
     }
 
     return (
-      <div className="App container-xxl">
-        <Navbar
-            color="primary"
-            expand="md"
-            dark
-          >
+      <div className="App container-xl ">
+        <Navbar color="primary" expand="md" dark>
             <NavbarBrand>
-              reactstrap
+              <Link className="text-white" to="/">Khoa</Link>
             </NavbarBrand>
             <Collapse navbar>
               <Nav className="me-auto" navbar>
                 <NavItem>
                   <NavLink>
-                    <Link className="text-white" to="/nhan-vien">Nhân viên</Link>
+                    <Link className="text-white" to="/nhan-vien"><i class="fa fa-users" aria-hidden="true" /> Nhân viên</Link>
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink>
-                    <Link className="text-white" to="/phong-ban">Phòng ban</Link>
+                    <Link className="text-white" to="/phong-ban"><i class="fa fa-id-card" aria-hidden="true" /> Phòng ban</Link>
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink>
-                    <Link className="text-white" to="/bang-luong">Bảng lương</Link>
+                    <Link className="text-white" to="/bang-luong"><i class="fa fa-money" aria-hidden="true" /> Bảng lương</Link>
                   </NavLink>
                 </NavItem>
                 </Nav>
@@ -65,6 +64,8 @@ class App extends Component {
         <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
         <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
         </Switch>
+
+        <Footer />
       </div>
     );
   }

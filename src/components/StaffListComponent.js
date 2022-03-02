@@ -20,11 +20,13 @@ class StaffList extends Component {
   render(){
     const menu = this.props.staffs.map((staff) => {
       return (
-        <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Link to={`/nhan-vien/${staff.id}`}><Card key={staff.id} outline="false" onClick={() => this.onStaffSelect(staff)}>
-            <CardImg/>
-            <CardTitle>{staff.name}</CardTitle>
-          </Card></Link>
+        <div id="item" className="col-12 col-lg-2 col-md-4">
+          <Link to={`/nhan-vien/${staff.id}`}>
+            <Card key={staff.id} outline="false" onClick={() => this.onStaffSelect(staff)}>
+              <CardImg src={"../"+staff.image}/>
+              <CardTitle >{staff.name}</CardTitle>
+            </Card>
+          </Link>
         </div>
       );
     });

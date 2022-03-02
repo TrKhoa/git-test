@@ -16,7 +16,7 @@ class SalaryList extends Component {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
           <Card key={staff.id} outline="false">
-            <CardTitle tag="h2">{staff.name}</CardTitle>
+            <CardTitle tag="h3">{staff.name}</CardTitle>
             <CardText className="text-left">
             Mã nhân viên: {staff.id}<br />
             Hệ số lương: {staff.salaryScale}<br />

@@ -15,7 +15,7 @@ class DepartmentList extends Component {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
           <Card body key={department.id} outline="false">
-            <CardTitle>{department.name}</CardTitle>
+            <CardTitle tag="h3">{department.name}</CardTitle>
             <CardText className="text-left">Số lượng nhân viên:{department.numberOfStaff}</CardText>
           </Card>
         </div>
