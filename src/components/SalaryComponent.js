@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText,Breadcrumb,BreadcrumbItem } from 'reactstrap';
+import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -17,12 +17,14 @@ class SalaryList extends Component {
         <div id="item" className="col-12 col-lg-2 col-md-5">
           <Card key={staff.id} outline="false">
             <CardTitle tag="h2">{staff.name}</CardTitle>
-            <CardText className="text-left" tag="h4">
+            <CardText className="text-left">
             Mã nhân viên: {staff.id}<br />
             Hệ số lương: {staff.salaryScale}<br />
             Số giờ làm thêm: {staff.overTime}<br />
-            Lương: {parseInt(staff.salaryScale)*3000000+parseInt(staff.overTime)*200000}
             </CardText>
+            <CardFooter>
+            Lương: {parseInt(staff.salaryScale)*3000000+parseInt(staff.overTime)*200000}
+            </CardFooter>
           </Card>
         </div>
       );
@@ -40,7 +42,7 @@ class SalaryList extends Component {
         tag="span">
           Bang luong
       </BreadcrumbItem>
-  </Breadcrumb>
+    </Breadcrumb>
        <div className="row">
         { menu }
        </div>

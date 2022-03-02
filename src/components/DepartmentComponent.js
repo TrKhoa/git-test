@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText,ButtonGroup,Button,CardImg } from 'reactstrap';
+import { Card,CardTitle,CardText,CardImg } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -14,8 +14,9 @@ class DepartmentList extends Component {
     const menu = this.props.departments.map((department) => {
       return (
         <div id="item" className="col-12 col-lg-2 col-md-5">
-          <Card key={department.id} outline="false">
+          <Card body key={department.id} outline="false">
             <CardTitle>{department.name}</CardTitle>
+            <CardText className="text-left">Số lượng nhân viên:{department.numberOfStaff}</CardText>
           </Card>
         </div>
       );

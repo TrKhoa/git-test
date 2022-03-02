@@ -1,5 +1,6 @@
 import './App.css';
-import { Navbar,NavbarBrand,NavLink } from 'reactstrap';
+import image from './assets/images/alberto.png'
+import { Navbar,NavbarBrand,NavLink,NavItem,Collapse,Nav } from 'reactstrap';
 import { Switch,Route,Link,Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -27,13 +28,36 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <Navbar dark color="primary">
-          <NavbarBrand href="*">Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
-          <NavLink><Link className="text-white" to="/nhan-vien">Nhân viên</Link></NavLink>
-          <NavLink><Link className="text-white" to="/phong-ban">Phòng ban</Link></NavLink>
-          <NavLink><Link className="text-white" to="/bang-luong">Bảng lương</Link></NavLink>
-        </Navbar>
+      <div className="App container-xxl">
+        <Navbar
+            color="primary"
+            expand="md"
+            dark
+          >
+            <NavbarBrand>
+              reactstrap
+            </NavbarBrand>
+            <Collapse navbar>
+              <Nav className="me-auto" navbar>
+                <NavItem>
+                  <NavLink>
+                    <Link className="text-white" to="/nhan-vien">Nhân viên</Link>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink>
+                    <Link className="text-white" to="/phong-ban">Phòng ban</Link>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink>
+                    <Link className="text-white" to="/bang-luong">Bảng lương</Link>
+                  </NavLink>
+                </NavItem>
+                </Nav>
+            </Collapse>
+          </Navbar>
+
         <Switch>
         <Route exact path="/" component={()=><StaffList staffs={this.state.staffs}/>} />
         <Route path="/nhan-vien/:idStaff" component={child} />
