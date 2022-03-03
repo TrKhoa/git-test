@@ -5,13 +5,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 /* Thiết kế phần Card hiển thị dữ liệu */
 const RenderDepartment = prop =>{
   return (
+    prop.departments.map(data => (
     <div id="item" className="col-12 col-lg-3 col-md-5 m-lg-2">
-      <Card body key={prop.id} outline="false">
-        <CardTitle tag="h3">{prop.name}</CardTitle>
-        <CardText className="text-left">Số lượng nhân viên:{prop.numberOfStaff}</CardText>
+      <Card body key={data.id} outline="false">
+        <CardTitle tag="h3">{data.name}</CardTitle>
+        <CardText className="text-left">Số lượng nhân viên:{data.numberOfStaff}</CardText>
       </Card>
-    </div>
-  );
+    </div>)))
 }
 
 class DepartmentList extends Component {
@@ -22,16 +22,10 @@ class DepartmentList extends Component {
        <div className="row">
 
         {/* Hiển thị danh sách phòng ban */}
-         { this.props.departments.map(data => (
-           <RenderDepartment
-            id={data.id}
-            name={data.name}
-            numberOfStaff={data.numberOfStaff}
-           />
-         ))}
+           <RenderDepartment departments={this.props.departments} />
        </div>
      </div>
-  );}
+  )}
 }
 
 export default DepartmentList;
