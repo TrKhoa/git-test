@@ -8,7 +8,7 @@ const RenderStaff = prop =>{
   return (
     <div id="item" className="col-6 col-lg-2 col-md-4">
       <Link to={`/nhan-vien/${prop.id}`}>
-        <Card key={prop.id} outline="false">
+        <Card key={prop.id} >
           <CardImg src={"../"+prop.image}/>
           <CardTitle >{prop.name}</CardTitle>
         </Card>

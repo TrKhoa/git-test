@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 const RenderStaff = staff => {
   return (
     <div id="item" className="col-12 col-lg-4 col-md-5">
-      <Card key={staff.id} outline="false">
+      <Card >
         <CardTitle tag="h3">{staff.name}</CardTitle>
         <CardText className="text-left">
           Mã nhân viên: {staff.id}<br />
@@ -83,7 +83,7 @@ class SalaryList extends Component {
     {/* Lựa chọn phương thức sắp xếp*/}
       <ButtonGroup>
         <Button onClick={() => this.renderByDefault()}>Mặc định</Button>
-        <Button onClick={() => this.renderById()}><i class="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
+        <Button onClick={() => this.renderById()}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
       </ButtonGroup>
        <div className="row">
        {this.state.data.map(staff =>(

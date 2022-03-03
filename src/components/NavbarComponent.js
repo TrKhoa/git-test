@@ -11,17 +11,17 @@ export default function NavigationBar(){
           <Nav className="me-auto" navbar>
             <NavItem>
               <NavLink>
-                <Link className="text-white" to="/nhan-vien"><i class="fa fa-users" aria-hidden="true" /> Nhân viên</Link>
+                <Link className="text-white" to="/nhan-vien"><i className="fa fa-users" aria-hidden="true" /> Nhân viên</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
-                <Link className="text-white" to="/phong-ban"><i class="fa fa-id-card" aria-hidden="true" /> Phòng ban</Link>
+                <Link className="text-white" to="/phong-ban"><i className="fa fa-id-card" aria-hidden="true" /> Phòng ban</Link>
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink>
-                <Link className="text-white" to="/bang-luong"><i class="fa fa-money" aria-hidden="true" /> Bảng lương</Link>
+                <Link className="text-white" to="/bang-luong"><i className="fa fa-money" aria-hidden="true" /> Bảng lương</Link>
               </NavLink>
             </NavItem>
           </Nav>
