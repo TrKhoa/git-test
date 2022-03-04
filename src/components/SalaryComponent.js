@@ -1,6 +1,6 @@
 import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem,Button,ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React, { Component,useState } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 {/* Thiết kế phần Card hiển thị dữ liệu*/}
@@ -31,7 +31,7 @@ const SalaryList = (props) => {
 
   /* Hàm xữ lí sắp xếp*/
   function handleSort(selectedType){
-    
+
     /* Chỉnh sửa lại State với kết quả thu được*/
     setData(
 

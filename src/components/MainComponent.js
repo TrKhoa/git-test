@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { STAFFS,DEPARTMENTS } from '../shared/staffs';
 
 /* import component */
-import NavigationBar from '../components/NavbarComponent';
+import Header from '../components/HeaderComponent';
 import StaffList from '../components/StaffListComponent';
 import StaffDetail from '../components/StaffDetailComponent';
 import DepartmentList from '../components/DepartmentComponent';
@@ -41,7 +41,7 @@ class Main extends Component {
 
     return (
       <div className="App container-xl ">
-        <NavigationBar />
+        <Header />
 
         {/* Khai báo các Route của web */}
         <Switch>
@@ -50,6 +50,8 @@ class Main extends Component {
           <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
           <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
           <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
+
+          {/* Trả về mặc định nếu route không hợp lệ */}
           <Redirect to="/" />
         </Switch>
         <Footer />
