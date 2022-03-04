@@ -48,7 +48,7 @@ export default function StaffList(prop){
            }
 
            {/* Liệt kê danh sách trong data dựa trên kết quả Filter*/}
-         }).map(data =>(
+         }).map((data) =>(
            <RenderStaff
             id={data.id}
             image={data.image}
