@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle, CardGroup } from 'reactstrap';
 
-
-    class Menu extends Component {
-
-        renderDish(dish) {
-            if (dish != null)
-                return(
-                  <div>
-                  <CardGroup>
+    function RenderDish({dish}) {
+        if (dish != null)
+            return(
+              <div>
+                <CardGroup>
                   <Card>
                       <CardImg top src={dish.image} alt={dish.name} />
                       <CardBody>
@@ -28,25 +25,25 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
                         ))}
 
                       </CardBody>
-                  </Card></CardGroup>
-                  </div>
-                );
-            else
-                return(
-                    <div></div>
-                );
-        }
+                  </Card>
+                </CardGroup>
+              </div>
+            );
+        else
+            return(
+                <div></div>
+            );
+    }
 
-        render() {
+    const DishDetail = (props) => {
 
             return (
                     <div className="row">
                       <div  className="col-12 col-md-5 m-1">
-                        {this.renderDish(this.props.dish)}
+                        <RenderDish dish={props.dish} />
                       </div>
                     </div>
             );
-        }
     }
 
-export default Menu;
+export default DishDetail;
