@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,
-    CardTitle, CardGroup } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody,CardTitle, CardGroup } from 'reactstrap';
 
     function RenderDish({dish}) {
         if (dish != null)
