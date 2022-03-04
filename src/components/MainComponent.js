@@ -3,7 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
 /* import modules */
-import { Switch,Route } from 'react-router-dom';
+import { Switch,Route,Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 
 /* import data */
@@ -50,6 +50,7 @@ class Main extends Component {
           <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
           <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
           <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
+          <Redirect to="/" />
         </Switch>
         <Footer />
       </div>
