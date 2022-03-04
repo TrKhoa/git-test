@@ -1,12 +1,39 @@
 import { Card,CardTitle,CardText,CardImg,CardBody,Breadcrumb,BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React, { Component } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 
-class StaffDetail extends Component {
-  render(){
-    const staff = this.props.staff[0];
+function Info({data}){
+  return(
+    <div className="row">
+      <div id="item" className="col-12 col-lg-3 col-md-4">
+
+        {/* Hiển thị hình ảnh nhân viên*/}
+        <CardImg src={"../"+data.image} className="img-fluid" />
+      </div>
+      <div id="item" className="col-12 col-lg-9 col-md-8">
+        <Card body key="5" className="text-left border-0">
+          <CardBody className="col-12 col-md-8 col-lg-9">
+
+            {/* Hiển thị tên và chi tiết nhân viên*/}
+            <CardTitle>{data.name}</CardTitle>
+            <CardText>
+              Ngày sinh: {dateFormat(data.doB, "dd/mm/yyyy")}<br />
+              Ngày vào công ty: {dateFormat(data.startDate, "dd/mm/yyyy")}<br />
+              Phòng ban: {data.department.name}<br />
+              Số ngày nghỉ còn lại: {data.annualLeave}<br />
+              Số ngày đã làm thêm: {data.overTime}
+            </CardText>
+          </CardBody>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+const StaffDetail = (props) =>{
+    const staff = props.staff[0];
     return (
       <div>
 
@@ -20,34 +47,14 @@ class StaffDetail extends Component {
         <BreadcrumbItem active tag="span">
 
           {/* Hiển thị tên nhân viên*/}
-            {staff.name}
+          {staff.name}
         </BreadcrumbItem>
       </Breadcrumb>
-        <div className="row">
-          <div id="item" className="col-12 col-lg-3 col-md-4">
 
-            {/* Hiển thị hình ảnh nhân viên*/}
-            <CardImg src={"../"+staff.image} className="img-fluid" />
-          </div>
-          <div id="item" className="col-12 col-lg-9 col-md-8">
-            <Card body key="5" className="text-left border-0">
-              <CardBody className="col-12 col-md-8 col-lg-9">
-
-                {/* Hiển thị tên và chi tiết nhân viên*/}
-                <CardTitle>{staff.name}</CardTitle>
-                <CardText>
-                  Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}<br />
-                  Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}<br />
-                  Phòng ban: {staff.department.name}<br />
-                  Số ngày nghỉ còn lại: {staff.annualLeave}<br />
-                  Số ngày đã làm thêm: {staff.overTime}
-                </CardText>
-              </CardBody>
-            </Card>
-          </div>
-        </div>
+      {/* Hiển thị thông tin nhân viên*/}
+      <Info data={staff} />
       </div>
-    );}
+    )
 }
 
 export default StaffDetail;
