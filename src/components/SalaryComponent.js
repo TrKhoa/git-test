@@ -31,6 +31,8 @@ const SalaryList = (props) => {
 
   /* Hàm xữ lí sắp xếp*/
   function handleSort(selectedType){
+    
+    /* Chỉnh sửa lại State với kết quả thu được*/
     setData(
 
       /* Dùng slice trong trường hợp này để tạo bản sao */
@@ -56,11 +58,7 @@ const SalaryList = (props) => {
               return -1
             }
         }
-      }))
-
-      /* Chỉnh sửa lại State với kết quả thu được ở trên*/
-      console.log(data)
-  }
+      }))}
 
   return (
     <div>
@@ -84,7 +82,7 @@ const SalaryList = (props) => {
         <Button onClick={() => handleSort(0)}>Mặc định</Button>
         <Button onClick={() => handleSort(1)}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
       </ButtonGroup>
-       <div className="row">{console.log(data)}
+       <div className="row">
        {data.map(staff =>(
 
          /* Hiển thị danh sách kết quả */
