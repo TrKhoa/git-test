@@ -1,10 +1,10 @@
 import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem,Button,ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React, { Component, } from 'react';
+import React, { Component,useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 {/* Thiết kế phần Card hiển thị dữ liệu*/}
-const RenderStaff = staff => {
+function RenderStaff(staff){
   return (
     <div id="item" className="col-12 col-lg-4 col-md-5">
       <Card >
@@ -24,45 +24,44 @@ const RenderStaff = staff => {
   );
 }
 
-class SalaryList extends Component {
-  constructor(props) {
-    super(props);
+const SalaryList = (props) => {
 
-    /* Khai báo State dùng trong việc sắp xếp*/
-    this.state = { data:this.props.staffs  };
-  }
+  /* Khai báo State dùng trong việc sắp xếp*/
+  const [data,setData] = useState(props.staffs)
 
-  renderByDefault(){
-      this.props.staffs.sort((a,b) =>{
+  /* Hàm xữ lí sắp xếp*/
+  function handleSort(selectedType){
+    setData(
 
-        /* Dựa trên kết quả thu được từ return để sắp xếp thứ tự*/
-        if(a.name > b.name){
-          return 1
-        }else {
-          return -1
+      /* Dùng slice trong trường hợp này để tạo bản sao */
+      data.slice().sort((a,b) =>{
+
+        /* Chọn phương thức sắp xếp*/
+        switch (selectedType) {
+          case 1:
+
+            /* Dựa trên kết quả thu được từ return để sắp xếp thứ tự*/
+            if(a.name < b.name){
+              return 1
+            }else {
+              return -1
+            }
+            break;
+          default:
+
+            /* Dựa trên kết quả thu được từ return để sắp xếp thứ tự*/
+            if(a.name > b.name){
+              return 1
+            }else {
+              return -1
+            }
         }
-      })
+      }))
 
       /* Chỉnh sửa lại State với kết quả thu được ở trên*/
-      this.setState({"data":this.props.staffs});
+      console.log(data)
   }
 
-  renderById(){
-      this.props.staffs.sort((a,b) =>{
-
-        /* Dựa trên kết quả thu được từ return để sắp xếp thứ tự*/
-        if(a.id < b.id){
-          return 1
-        }else {
-          return -1
-        }
-      })
-
-      /* Chỉnh sửa lại State với kết quả thu được ở trên*/
-      this.setState({"data":this.props.staffs});
-  }
-
-  render(){
   return (
     <div>
 
@@ -82,11 +81,11 @@ class SalaryList extends Component {
 
     {/* Lựa chọn phương thức sắp xếp*/}
       <ButtonGroup>
-        <Button onClick={() => this.renderByDefault()}>Mặc định</Button>
-        <Button onClick={() => this.renderById()}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
+        <Button onClick={() => handleSort(0)}>Mặc định</Button>
+        <Button onClick={() => handleSort(1)}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
       </ButtonGroup>
-       <div className="row">
-       {this.state.data.map(staff =>(
+       <div className="row">{console.log(data)}
+       {data.map(staff =>(
 
          /* Hiển thị danh sách kết quả */
         <RenderStaff
@@ -95,11 +94,10 @@ class SalaryList extends Component {
           salaryScale={staff.salaryScale}
           overTime={staff.overTime}
         />
-      ))
-      }
+      ))}
        </div>
      </div>
-  );}
+  )
 }
 
 export default SalaryList;
