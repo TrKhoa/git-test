@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
 {/* Thiết kế phần Card hiển thị dữ liệu*/}
-function RenderStaff(staff){
+function RenderStaff({staff}){
   return (
     <div id="item" className="col-12 col-lg-4 col-md-5">
       <Card >
@@ -87,10 +87,7 @@ const SalaryList = (props) => {
 
          /* Hiển thị danh sách kết quả */
         <RenderStaff
-          id={staff.id}
-          name={staff.name}
-          salaryScale={staff.salaryScale}
-          overTime={staff.overTime}
+          staff={staff}
         />
       ))}
        </div>
