@@ -64,7 +64,7 @@ const SalaryList = (props) => {
     <div>
 
     {/* Tạo phần hiển vị trí hiện tại trên cấu trúc Website*/}
-    <Breadcrumb listTag="div">
+    <Breadcrumb>
       <BreadcrumbItem>
         <Link to="/Nhan-vien">
           Nhân viên
