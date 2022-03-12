@@ -1,9 +1,10 @@
-import { Card,CardTitle,CardImg,InputGroup,Input,Button } from 'reactstrap';
+import React,{ useState,usePrevious } from 'react';
+import { Card,CardTitle,CardImg,Form,FormGroup,Row, Col,InputGroup,Input,Label,Button,
+  Modal,ModalHeader,ModalBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import React,{ useState } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.css';
 
-{/* Thiết kế phần Card hiển thị dữ liệu*/}
 const RenderStaff = prop =>{
   return (
     <div id="item" className="col-6 col-lg-2 col-md-4">
@@ -17,37 +18,150 @@ const RenderStaff = prop =>{
   );
 }
 
+const required = value => value && value.length;
+const minLength = min => value => (value && value.length >= min) || !value;
+const maxLength = max => value => (value && value.length <= max) || !value;
+const minValue = min => value => (value && value >= min) || !value;
+
 export default function StaffList(prop){
 
-  {/* Khai báo state dùng cho searchbar */}
-  const [search,setSearch] = useState("")
+  const [search,setSearch] = useState("");
+  const [modalStatus,setModalStatus] = useState(false);
+  const [form,setForm] = useState({
+     name: '',
+     dob: '',
+     startDate: '',
+     salaryScale: '',
+     annualLeave: '',
+     overTime: '',
+     message: ''
+   })
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    setSearch(e.target.search.value);
+  }
+
+  const toggleModal = () => {
+    setModalStatus(!modalStatus);
+  }
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    setModalStatus(!modalStatus);
+  }
+
+  const handleInputChange = (e) => {
+        const target = e.target;
+        const value = target.value;
+        const name = target.name;
+        setForm({
+          ...form,
+          [name]: value
+        })
+    }
+
   return (
+
     <div>
       <div className="col-12 bg-primary pb-2">
-
-      {/* Searchbar */}
-        <InputGroup className="col-md-3">
-          <Button>Tìm</Button>
-
-          {/* Nếu có sự thay đổi nào trên searchbar sẽ thay đổi state = dữ liệu hiện có trong searchbar */}
-          <Input onChange={(event) => {setSearch(event.target.value)}} />
-        </InputGroup>
+          <InputGroup className="col-md-3">
+            <Button onClick={toggleModal} className="bg-dark">Thêm</Button>
+            <form onSubmit={handleSubmitForm}>
+              <Input name="search" />
+              <Button type="submit" value="Submit">Tìm</Button>
+            </form>
+          </InputGroup>
       </div>
+      <Modal isOpen={modalStatus} size="lg" toggle={() => setModalStatus(!modalStatus)}>
+        <ModalHeader toggle={toggleModal}>Login</ModalHeader>
+        <ModalBody>
+        <Form onSubmit={(values) => handleSubmitForm(values)}>
+            <FormGroup row>
+                <Label htmlFor="name" md={2}>Tên</Label>
+                <Col md={10}>
+                    <Input type="text" id="name" name="name"
+                        placeholder="Tên"
+                        value={form.name}
+                        onChange={handleInputChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Label htmlFor="dob" md={2}>Ngày sinh</Label>
+                <Col md={10}>
+                    <Input type="date" id="dob" name="dob"
+                        placeholder="Ngày sinh"
+                        value={form.dob}
+                        onChange={handleInputChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Label htmlFor="startDate" md={2}>Ngày vào công ty</Label>
+                <Col md={10}>
+                    <Input type="date" id="startDate" name="startDate"
+                        placeholder="Ngày vào công ty"
+                        value={form.startDate}
+                        onChange={handleInputChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Label htmlFor="department" md={2}>Email</Label>
+                <Col md={10}>
+                  <Input type="select" name="department"
+                      value={form.contactType}
+                      onChange={handleInputChange}>
+                      <option key="0">-------Chọn phòng ban----------</option>
+                      {prop.departments.map((val) =>
+                        <option key={val.id}>{val.name}</option>
+                      )}
+                </Input>
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Label htmlFor="salaryScale" md={2}>Hệ số lương</Label>
+                <Col md={10}>
+                    <Input type="text" id="salaryScale" name="salaryScale"
+                        placeholder="Hệ số lương"
+                        value={form.salaryScale}
+                        onChange={handleInputChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Label htmlFor="salaryScale" md={2}>Số ngày nghỉ còn lại</Label>
+                <Col md={10}>
+                    <Input type="number" id="annualLeave" name="annualLeave"
+                        placeholder="Số ngày nghỉ còn lại"
+                        value={form.annualLeave}
+                        onChange={handleInputChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Label htmlFor="salaryScale" md={2}>Số ngày đã làm thêm</Label>
+                <Col md={10}>
+                    <Input type="number" id="overTime" name="overTime"
+                        placeholder="Số ngày đã làm thêm"
+                        value={form.overTime}
+                        onChange={handleInputChange} />
+                </Col>
+            </FormGroup>
+            <FormGroup row>
+                <Col md={{size: 10, offset: 2}}>
+                    <Button type="submit" color="primary">
+                        Send Feedback
+                    </Button>
+                </Col>
+            </FormGroup>
+        </Form>
+        </ModalBody>
+      </Modal>
+
        <div className="row">
-
-       {/* Sàng lọc dữ liệu bằng filter*/}
          { prop.staffs.filter((val) => {
-
-           {/* Trả về toàn bộ nếu không có thay đổi so với ban đầu*/}
            if(search===""){
              return val
-
-             {/* Đổi dữ liệu nhập và trong data thành chữ thường để so sánh*/}
            } else if (val.name.toLowerCase().includes(search.toLowerCase())){
              return val
            }
-
-           {/* Liệt kê danh sách trong data dựa trên kết quả Filter*/}
          }).map((data) =>(
            <RenderStaff
             id={data.id}

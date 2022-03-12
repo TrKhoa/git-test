@@ -45,9 +45,9 @@ class Main extends Component {
 
         {/* Khai báo các Route của web */}
         <Switch>
-          <Route exact path="/" component={()=><StaffList staffs={this.state.staffs}/>} />
+          <Route exact path="/" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} />} />
           <Route path="/nhan-vien/:idStaff" component={child} />
-          <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
+          <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} />} />
           <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
           <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
 
