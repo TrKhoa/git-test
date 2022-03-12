@@ -22,8 +22,9 @@ class Main extends Component {
     super(props);
 
     /* Khai báo state và gán data cho state */
+    localStorage.setItem('staffs',JSON.stringify(STAFFS));
     this.state = {
-      staffs: STAFFS,
+      staffs: JSON.parse(localStorage.getItem('staffs')),
       departments: DEPARTMENTS
     };
   }
