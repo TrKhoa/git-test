@@ -21,7 +21,7 @@ function Info({data}){
             <CardText>
               Ngày sinh: {dateFormat(data.doB, "dd/mm/yyyy")}<br />
               Ngày vào công ty: {dateFormat(data.startDate, "dd/mm/yyyy")}<br />
-              Phòng ban: {data.department.name}<br />
+              Phòng ban: {data.department.id ? data.department.name : JSON.parse(data.department).name}<br />
               Số ngày nghỉ còn lại: {data.annualLeave}<br />
               Số ngày đã làm thêm: {data.overTime}
             </CardText>

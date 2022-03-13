@@ -1,6 +1,6 @@
 import React,{ useState,useRef } from 'react';
 import { Card,CardTitle,CardImg,Form,FormGroup,Row, Col,InputGroup,Input,Label,Button,
-  Modal,ModalHeader,ModalBody } from 'reactstrap';
+  Modal,ModalHeader,ModalBody, FormFeedback } from 'reactstrap';
 import { Link,withRouter } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -17,11 +17,6 @@ const RenderStaff = prop =>{
     </div>
   );
 }
-
-const required = value => value && value.length;
-const minLength = min => value => (value && value.length >= min) || !value;
-const maxLength = max => value => (value && value.length <= max) || !value;
-const minValue = min => value => (value && value >= min) || !value;
 
 const initialState = {
   id: '',
@@ -40,16 +35,34 @@ function StaffList(prop){
   let search = useRef("khoa");
 
   const [modalStatus,setModalStatus] = useState(false);
+  const [error,setError] = useState({
+    name:''
+  });
   const [form,setForm] = useState({
     id: '',
     name: '',
     dob: '',
     images: '',
     startDate: '',
+    department: '',
     salaryScale: '',
-    annualLeave: '',
-    overTime: '',
+    annualLeave: '0',
+    overTime: '0',
   })
+
+  const[touched,setTouched] = useState({
+    name: false,
+    dob: false,
+    startDate: false,
+    salaryScale: false,
+    department: true,
+    annualLeave: false,
+    overTime: false,
+  })
+
+  const handleBlur = (field) => (e) =>{
+    setTouched({ ...touched, [field] : true})
+  }
 
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -73,8 +86,10 @@ function StaffList(prop){
     const newStorage = store;
     [store][0].push(form);
     localStorage.setItem('staffs',JSON.stringify(newStorage));
+    console.log(JSON.stringify(newStorage));
     prop.changeState();
-}
+
+  }
 
   const handleInputChange = (e) => {
         const target = e.target;
@@ -84,7 +99,42 @@ function StaffList(prop){
           ...form,
           [name]: value,
         })
+        console.log(JSON.stringify(form));
     }
+
+    const validate = (name,dob,startDate,department,salaryScale,annualLeave,overTime) => {
+        const error = {
+          name: '',
+          dob: '',
+          startDate: '',
+          department: '',
+          salaryScale: '',
+          annualLeave: '',
+          overTime: '',
+          isAvailable:false
+        };
+
+        if (touched.name && name.length < 3)
+          error.name = 'Tên phải nhiều hơn 3 kí tự';
+        if (touched.dob && dob=="")
+          error.dob = 'Vui lòng điền ngày sinh';
+        if (touched.startDate && startDate=="")
+          error.startDate = 'Vui lòng nhập ngày vào';
+        if (touched.salaryScale && salaryScale=="")
+          error.salaryScale = 'Vui lòng nhập hệ số lương';
+        if (touched.annualLeave && annualLeave=="")
+          error.annualLeave = 'Vui lòng nhập số ngày';
+        if (touched.overTime && overTime=="")
+          error.overTime = 'Vui lòng nhập số ngày';
+        if (
+          touched.name && touched.dob && touched.startDate && touched.department
+          && error.name ==='' && error.dob ==='' && error.startDate==='' &&
+          error.department ==='' && error.salaryScale ==='' && error.overTime ==='')
+          error.isAvailable = true
+        return error;
+    }
+
+    const errors = validate(form.name,form.dob,form.startDate,Form.department,form.salaryScale,form.annualLeave,form.overTime)
 
   return (
 
@@ -110,7 +160,11 @@ function StaffList(prop){
                     <Input type="text" id="name" name="name"
                         placeholder="Tên"
                         value={form.name}
-                        onChange={handleInputChange} />
+                        valid={errors.name===''}
+                        invalid={errors.name!=''}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur('name')}/>
+                    <FormFeedback>{errors.name }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
@@ -119,7 +173,11 @@ function StaffList(prop){
                     <Input type="date" id="dob" name="dob"
                         placeholder="Ngày sinh"
                         value={form.dob}
-                        onChange={handleInputChange} />
+                        valid={errors.dob===''}
+                        invalid={errors.dob!=''}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur('dob')}/>
+                    <FormFeedback>{errors.dob }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
@@ -128,52 +186,75 @@ function StaffList(prop){
                     <Input type="date" id="startDate" name="startDate"
                         placeholder="Ngày vào công ty"
                         value={form.startDate}
-                        onChange={handleInputChange} />
+                        valid={errors.startDate===''}
+                        invalid={errors.startDate!=''}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur('startDate')}/>
+                    <FormFeedback>{errors.startDate }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
-                <Label htmlFor="department" md={2}>Email</Label>
+                <Label htmlFor="department" md={2}>Phòng ban</Label>
                 <Col md={10}>
                   <Input type="select" name="department"
-                      value={form.contactType}
-                      onChange={handleInputChange}>
-                      <option key="0">-------Chọn phòng ban----------</option>
+                      value={form.department}
+                      valid={errors.department===''}
+                      invalid={errors.department!=''}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur('department')}>
+                      <option key="0" value="0" selected="selected">-------Chọn phòng ban----------</option>
                       {prop.departments.map((val) =>
-                        <option key={val.id}>{val.name}</option>
+                          <option key={val.id} value={JSON.stringify(val)}>{val.name}</option>
                       )}
                 </Input>
+                <FormFeedback>{errors.department }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
                 <Label htmlFor="salaryScale" md={2}>Hệ số lương</Label>
                 <Col md={10}>
-                    <Input type="text" id="salaryScale" name="salaryScale"
+                    <Input type="number" id="salaryScale" name="salaryScale"
                         placeholder="Hệ số lương"
                         value={form.salaryScale}
-                        onChange={handleInputChange} />
+                        valid={errors.salaryScale===''}
+                        invalid={errors.salaryScale!=''}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur('salaryScale')}
+                        min="0"/>
+                    <FormFeedback>{errors.salaryScale }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
-                <Label htmlFor="salaryScale" md={2}>Số ngày nghỉ còn lại</Label>
+                <Label htmlFor="annualLeave" md={2}>Số ngày nghỉ còn lại</Label>
                 <Col md={10}>
                     <Input type="number" id="annualLeave" name="annualLeave"
                         placeholder="Số ngày nghỉ còn lại"
                         value={form.annualLeave}
-                        onChange={handleInputChange} />
+                        valid={errors.annualLeave===''}
+                        invalid={errors.annualLeave!=''}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur('annualLeave')}
+                        min="0"/>
+                    <FormFeedback>{errors.annualLeave }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
-                <Label htmlFor="salaryScale" md={2}>Số ngày đã làm thêm</Label>
+                <Label htmlFor="overTime" md={2}>Số ngày đã làm thêm</Label>
                 <Col md={10}>
                     <Input type="number" id="overTime" name="overTime"
                         placeholder="Số ngày đã làm thêm"
                         value={form.overTime}
-                        onChange={handleInputChange} />
+                        valid={errors.overTime===''}
+                        invalid={errors.overTime!=''}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur('overTime')}
+                        min="0"/>
+                    <FormFeedback>{errors.overTime }</FormFeedback>
                 </Col>
             </FormGroup>
             <FormGroup row>
                 <Col md={{size: 10, offset: 2}}>
-                    <Button type="submit" color="primary">
+                    <Button type="submit" color="primary" disabled={!errors.isAvailable}>
                         Send Feedback
                     </Button>
                 </Col>
