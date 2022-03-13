@@ -25,16 +25,18 @@ const minValue = min => value => (value && value >= min) || !value;
 
 export default function StaffList(prop){
 
+  const store = JSON.parse(localStorage.getItem('staffs'));
   const [search,setSearch] = useState("");
   const [modalStatus,setModalStatus] = useState(false);
   const [form,setForm] = useState({
-     name: '',
-     dob: '',
-     startDate: '',
-     salaryScale: '',
-     annualLeave: '',
-     overTime: '',
-     message: ''
+    id: '',
+    name: '',
+    dob: '',
+    images: '',
+    startDate: '',
+    salaryScale: '',
+    annualLeave: '',
+    overTime: '',
    })
 
   const handleSubmit = (e) =>{
@@ -44,12 +46,21 @@ export default function StaffList(prop){
 
   const toggleModal = () => {
     setModalStatus(!modalStatus);
+    setForm({
+      ...form,
+      id: Object.keys(store).length,
+      image: '/assets/images/alberto.png'
+    })
   }
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
     setModalStatus(!modalStatus);
-  }
+    const newStorage = store;
+    [store][0].push(form);
+    localStorage.setItem('staffs',JSON.stringify(newStorage));
+    prop.changeState();
+}
 
   const handleInputChange = (e) => {
         const target = e.target;
@@ -57,7 +68,7 @@ export default function StaffList(prop){
         const name = target.name;
         setForm({
           ...form,
-          [name]: value
+          [name]: value,
         })
     }
 
@@ -65,13 +76,13 @@ export default function StaffList(prop){
 
     <div>
       <div className="col-12 bg-primary pb-2">
+      <form onSubmit={handleSubmitForm}>
           <InputGroup className="col-md-3">
             <Button onClick={toggleModal} className="bg-dark">Thêm</Button>
-            <form onSubmit={handleSubmitForm}>
               <Input name="search" />
-              <Button type="submit" value="Submit">Tìm</Button>
-            </form>
+              <Button onClick={()=>localStorage.clear()}>Tìm</Button>
           </InputGroup>
+          </form>
       </div>
       <Modal isOpen={modalStatus} size="lg" toggle={() => setModalStatus(!modalStatus)}>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>

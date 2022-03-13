@@ -18,15 +18,28 @@ import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
 
 class Main extends Component {
+  store() {
+    if(!localStorage.getItem('staffs')){
+      localStorage.setItem('staffs',JSON.stringify(STAFFS));
+    }
+  }
+
   constructor(props) {
     super(props);
 
     /* Khai báo state và gán data cho state */
-    localStorage.setItem('staffs',JSON.stringify(STAFFS));
+    this.store();
+    const Store = JSON.parse(localStorage.getItem('staffs'));
     this.state = {
-      staffs: JSON.parse(localStorage.getItem('staffs')),
+      staffs: Store,
       departments: DEPARTMENTS
     };
+  }
+
+  changeState(){
+    this.setState({
+      'staffs': JSON.parse(localStorage.getItem('staffs'))
+    })
   }
 
   render(){
@@ -43,12 +56,11 @@ class Main extends Component {
     return (
       <div className="App container-xl ">
         <Header />
-
         {/* Khai báo các Route của web */}
         <Switch>
-          <Route exact path="/" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} />} />
+          <Route exact path="/" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} changeState={() => this.changeState()} />} />
           <Route path="/nhan-vien/:idStaff" component={child} />
-          <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} />} />
+          <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} changeState={() => this.changeState()} />} />
           <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
           <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
 
