@@ -1,7 +1,7 @@
-import React,{ useState,usePrevious } from 'react';
+import React,{ useState,useRef } from 'react';
 import { Card,CardTitle,CardImg,Form,FormGroup,Row, Col,InputGroup,Input,Label,Button,
   Modal,ModalHeader,ModalBody } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -23,10 +23,22 @@ const minLength = min => value => (value && value.length >= min) || !value;
 const maxLength = max => value => (value && value.length <= max) || !value;
 const minValue = min => value => (value && value >= min) || !value;
 
-export default function StaffList(prop){
+const initialState = {
+  id: '',
+  name: '',
+  dob: '',
+  images: '',
+  startDate: '',
+  salaryScale: '',
+  annualLeave: '',
+  overTime: '',
+}
+
+function StaffList(prop){
 
   const store = JSON.parse(localStorage.getItem('staffs'));
-  const [search,setSearch] = useState("");
+  let search = useRef("khoa");
+
   const [modalStatus,setModalStatus] = useState(false);
   const [form,setForm] = useState({
     id: '',
@@ -37,11 +49,13 @@ export default function StaffList(prop){
     salaryScale: '',
     annualLeave: '',
     overTime: '',
-   })
+  })
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    setSearch(e.target.search.value);
+    search.current = e.target.search.value;
+    localStorage.setItem('search',search.current);
+    prop.history.push('/tim-kiem')
   }
 
   const toggleModal = () => {
@@ -75,15 +89,17 @@ export default function StaffList(prop){
   return (
 
     <div>
+
       <div className="col-12 bg-primary pb-2">
-      <form onSubmit={handleSubmitForm}>
+        <form onSubmit={handleSubmit}>
           <InputGroup className="col-md-3">
             <Button onClick={toggleModal} className="bg-dark">Thêm</Button>
-              <Input name="search" />
-              <Button onClick={()=>localStorage.clear()}>Tìm</Button>
+            <Input name="search" />
+            <Button type='submit' name='submit'>Tìm</Button>
           </InputGroup>
           </form>
       </div>
+
       <Modal isOpen={modalStatus} size="lg" toggle={() => setModalStatus(!modalStatus)}>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>
         <ModalBody>
@@ -167,13 +183,7 @@ export default function StaffList(prop){
       </Modal>
 
        <div className="row">
-         { prop.staffs.filter((val) => {
-           if(search===""){
-             return val
-           } else if (val.name.toLowerCase().includes(search.toLowerCase())){
-             return val
-           }
-         }).map((data) =>(
+         { prop.staffs.map((data) =>(
            <RenderStaff
             id={data.id}
             image={data.image}
@@ -184,3 +194,5 @@ export default function StaffList(prop){
      </div>
   )
 }
+
+export default withRouter(StaffList);

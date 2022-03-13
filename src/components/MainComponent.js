@@ -13,6 +13,7 @@ import { STAFFS,DEPARTMENTS } from '../shared/staffs';
 import Header from '../components/HeaderComponent';
 import StaffList from '../components/StaffListComponent';
 import StaffDetail from '../components/StaffDetailComponent';
+import SearchStaffs from '../components/SearchComponent'
 import DepartmentList from '../components/DepartmentComponent';
 import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
@@ -61,6 +62,7 @@ class Main extends Component {
           <Route exact path="/" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} changeState={() => this.changeState()} />} />
           <Route path="/nhan-vien/:idStaff" component={child} />
           <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs} departments={this.state.departments} changeState={() => this.changeState()} />} />
+          <Route path="/tim-kiem" component={()=><SearchStaffs staffs={this.state.staffs} />} />
           <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
           <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
 
