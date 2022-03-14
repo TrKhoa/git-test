@@ -2,7 +2,6 @@ import { Card,CardTitle,CardText } from 'reactstrap';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-/* Thiết kế phần Card hiển thị dữ liệu */
 const RenderDepartment = prop =>{
   return (
     prop.departments.map(data => (
@@ -20,8 +19,6 @@ class DepartmentList extends Component {
   return (
     <div>
        <div className="row">
-
-        {/* Hiển thị danh sách phòng ban */}
            <RenderDepartment departments={this.props.departments} />
        </div>
      </div>

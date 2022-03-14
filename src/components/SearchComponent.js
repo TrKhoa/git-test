@@ -1,6 +1,5 @@
-import React,{ useState,useRef} from 'react';
-import { Card,CardTitle,CardImg,Form,FormGroup,Row, Col,InputGroup,Input,Label,Button,
-  Modal,ModalHeader,ModalBody } from 'reactstrap';
+import React from 'react';
+import { Card,CardTitle,CardImg } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
