@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-{/* Thiết kế phần Card hiển thị dữ liệu*/}
 function RenderStaff({staff}){
   return (
     <div id="item" className="col-12 col-lg-4 col-md-5">
@@ -14,8 +13,6 @@ function RenderStaff({staff}){
           Hệ số lương: {staff.salaryScale}<br />
           Số giờ làm thêm: {staff.overTime}<br />
         </CardText>
-
-        {/* lấy dữ liệu truyển vào chuyển sang dạng int rồi tính tiền lương*/}
         <CardFooter>
           Lương: {parseInt(staff.salaryScale)*3000000+parseInt(staff.overTime)*200000}
         </CardFooter>
@@ -26,23 +23,13 @@ function RenderStaff({staff}){
 
 const SalaryList = (props) => {
 
-  /* Khai báo State dùng trong việc sắp xếp*/
   const [data,setData] = useState(props.staffs)
-
-  /* Hàm xữ lí sắp xếp*/
+  
   function handleSort(selectedType){
-
-    /* Chỉnh sửa lại State với kết quả thu được*/
     setData(
-
-      /* Dùng slice trong trường hợp này để tạo bản sao */
       data.slice().sort((a,b) =>{
-
-        /* Chọn phương thức sắp xếp*/
         switch (selectedType) {
           case 1:
-
-            /* Dựa trên kết quả thu được từ return để sắp xếp thứ tự*/
             if(a.name < b.name){
               return 1
             }else {
@@ -50,8 +37,6 @@ const SalaryList = (props) => {
             }
             break;
           default:
-
-            /* Dựa trên kết quả thu được từ return để sắp xếp thứ tự*/
             if(a.name > b.name){
               return 1
             }else {
@@ -62,8 +47,6 @@ const SalaryList = (props) => {
 
   return (
     <div>
-
-    {/* Tạo phần hiển vị trí hiện tại trên cấu trúc Website*/}
     <Breadcrumb>
       <BreadcrumbItem>
         <Link to="/Nhan-vien">
@@ -77,15 +60,13 @@ const SalaryList = (props) => {
       </BreadcrumbItem>
     </Breadcrumb>
 
-    {/* Lựa chọn phương thức sắp xếp*/}
       <ButtonGroup>
         <Button onClick={() => handleSort(0)}>Mặc định</Button>
         <Button onClick={() => handleSort(1)}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
       </ButtonGroup>
+
        <div className="row">
        {data.map(staff =>(
-
-         /* Hiển thị danh sách kết quả */
         <RenderStaff
           staff={staff}
         />

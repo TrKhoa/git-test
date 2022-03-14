@@ -1,15 +1,10 @@
-/* import css */
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
-/* import modules */
-import { Switch,Route,Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 
-/* import data */
-import { STAFFS,DEPARTMENTS } from '../shared/staffs';
-
-/* import component */
 import Header from '../components/HeaderComponent';
 import StaffList from '../components/StaffListComponent';
 import StaffDetail from '../components/StaffDetailComponent';
@@ -17,41 +12,33 @@ import DepartmentList from '../components/DepartmentComponent';
 import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
 
-class Main extends Component {
-  constructor(props) {
-    super(props);
-
-    /* Khai báo state và gán data cho state */
-    this.state = {
-      staffs: STAFFS,
-      departments: DEPARTMENTS
-    };
+const mapStateToProps = state => {
+  console.log(state.staffs);
+  return {
+    staffs: state.staffs,
+    departments: state.departments
   }
+}
 
+class Main extends Component {
   render(){
 
-    /* Truyền dữ liệu thu được từ URL vào trang chi tiết nhân viên */
     const child=({ match })=> {
       return(
-
-        /* Truyền dữ liệu đã sàng lọc vào phần chi tiết nhân viên */
-        <StaffDetail staff={this.state.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))} />
+        <StaffDetail staff={this.props.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))} />
       )
     }
 
     return (
-      <div className="App container-xl ">
-        <Header />
+      <div className="container-xl ">
+        <Header />{console.log(this.props)}
 
-        {/* Khai báo các Route của web */}
         <Switch>
-          <Route exact path="/" component={()=><StaffList staffs={this.state.staffs}/>} />
+          <Route exact path="/" component={()=><StaffList staffs={this.props.staffs} department={this.props.departments}/>} />
           <Route path="/nhan-vien/:idStaff" component={child} />
-          <Route path="/nhan-vien" component={()=><StaffList staffs={this.state.staffs}/>} />
-          <Route path="/phong-ban" component={()=><DepartmentList departments={this.state.departments}/>} />
-          <Route path="/bang-luong" component={()=><SalaryList staffs={this.state.staffs}/>} />
-
-          {/* Trả về mặc định nếu route không hợp lệ */}
+          <Route path="/nhan-vien" component={()=><StaffList staffs={this.props.staffs} department={this.props.departments} />} />
+          <Route path="/phong-ban" component={()=><DepartmentList department={this.props.departments}/>} />
+          <Route path="/bang-luong" component={()=><SalaryList staffs={this.props.staffs}/>} />
           <Redirect to="/" />
         </Switch>
         <Footer />
@@ -60,4 +47,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
