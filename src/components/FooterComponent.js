@@ -28,13 +28,13 @@ export default function Footer(props) {
                     </address>
                 </div>
                 <div className="col-12 col-sm-4 align-self-center">
-                    <div className="text-center">
+                    <div className="text-center text-light">
                         <a className="btn btn-social-icon btn-google"><i className="fa fa-google-plus"></i></a>
                         <a className="btn btn-social-icon btn-facebook"><i className="fa fa-facebook"></i></a>
                         <a className="btn btn-social-icon btn-linkedin"><i className="fa fa-linkedin"></i></a>
                         <a className="btn btn-social-icon btn-twitter"><i className="fa fa-twitter"></i></a>
                         <a className="btn btn-social-icon btn-google"><i className="fa fa-youtube"></i></a>
-                        <a className="btn btn-social-icon"><i className="fa fa-envelope-o"></i></a>
+                        <a className="btn btn-social-icon text-dark"><i className="fa fa-envelope-o"></i></a>
                     </div>
                 </div>
             </div>
