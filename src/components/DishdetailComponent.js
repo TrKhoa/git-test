@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody,CardTitle, CardGroup } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody,
+    CardTitle, CardGroup } from 'reactstrap';
 
     function RenderDish({dish}) {
         if (dish != null)
             return(
-              <div>
-                <CardGroup>
                   <Card>
                       <CardImg top src={dish.image} alt={dish.name} />
                       <CardBody>
@@ -13,6 +12,16 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,CardTitle, CardGroup 
                         <CardText>{dish.description}</CardText>
                       </CardBody>
                   </Card>
+            );
+        else
+            return(
+                <div></div>
+            );
+    }
+
+    function RenderComments({dish}) {
+        if (dish != null)
+            return(
                   <Card>
                       <CardBody className="text-left">
                         <CardTitle>Comments</CardTitle>
@@ -25,8 +34,6 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,CardTitle, CardGroup 
 
                       </CardBody>
                   </Card>
-                </CardGroup>
-              </div>
             );
         else
             return(
@@ -37,9 +44,12 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,CardTitle, CardGroup 
     const DishDetail = (props) => {
 
             return (
-                    <div className="row">
+                    <div className="row">{console.log(props)}
                       <div  className="col-12 col-md-5 m-1">
+                        <CardGroup>
                         <RenderDish dish={props.dish} />
+                        <RenderComments dish={props.dish} />
+                        </CardGroup>
                       </div>
                     </div>
             );
