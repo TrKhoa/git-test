@@ -3,21 +3,42 @@ import { Card,CardTitle,CardImg,Row, Col,InputGroup,Input,Label,Button,
   Modal,ModalHeader,ModalBody } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
-import { configureStore } from '../redux/configureStore';
+import { Loading } from './LoadingComponent';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-const RenderStaff = prop =>{
+const RenderStaff = ({data, isLoading, errMess, search}) =>{
+  if (isLoading) {
+        return(
+              <Loading />
+        );
+    }
+    else if (errMess) {
+        return(
+              <h4>{errMess}</h4>
+        );
+    }
   return (
-    <div id="item" className="col-6 col-lg-2 col-md-4">
-      <Link to={`/nhan-vien/${prop.id}`}>
-        <Card key={prop.id} >
-          <CardImg src={"../"+prop.image}/>
-          <CardTitle >{prop.name}</CardTitle>
-        </Card>
-      </Link>
-    </div>
+    <React.Fragment>
+    { data.filter((val) => {
+      if(search===""){
+        return val
+      } else if (val.name.toLowerCase().includes(search.toLowerCase())){
+        return val
+      }
+    }).map((data) =>(
+      <div id="item" className="col-6 col-lg-2 col-md-4">
+        <Link to={`/nhan-vien/${data.id}`}>
+          <Card key={data.id} >
+            <CardImg src={"../"+data.image}/>
+            <CardTitle >{data.name}</CardTitle>
+          </Card>
+        </Link>
+      </div>
+    ))}
+    </React.Fragment>
   );
+
 }
 
 const required = value => value && value.length;
@@ -65,7 +86,7 @@ export default function StaffList(prop){
           payload: JSON.stringify(transfer)
         };
 
-        configureStore().dispatch(action);
+      //  configureStore().dispatch(action);
   }
 
   const RenderStaffAdd = (contain) =>{
@@ -83,7 +104,7 @@ export default function StaffList(prop){
                       className="form-control"
                       validators={{ required, maxLength: maxLength(30), minLength: minLength(5) }}
                    />
-                   <RenderError model=".name" />
+                     <RenderError model=".name" />
               </Col>
 
           </Row>
@@ -161,7 +182,7 @@ export default function StaffList(prop){
                   </Button>
               </Col>
           </Row>
-      </LocalForm>
+          </LocalForm>
         </ModalBody>
       </React.Fragment>
     )
@@ -185,20 +206,14 @@ export default function StaffList(prop){
       </Modal>
 
        <div className="row">
-         { prop.staffs.filter((val) => {
-           if(search===""){
-             return val
-           } else if (val.name.toLowerCase().includes(search.toLowerCase())){
-             return val
-           }
-         }).map((data) =>(
            <RenderStaff
-            id={data.id}
-            image={data.image}
-            name={data.name}
+            data={prop.staffs}
+            isLoading={prop.staffsLoading}
+            errMess={prop.staffsErrMess}
+            search={search}
            />
-         ))}
        </div>
+       
      </div>
   )
 }

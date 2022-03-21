@@ -12,6 +12,8 @@ import DepartmentList from '../components/DepartmentComponent';
 import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
 
+import { fetchStaff, fetchDepartment } from '../redux/ActionCreators';
+
 const mapStateToProps = state => {
   console.log(state.staffs);
   return {
@@ -20,12 +22,60 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+    fetchStaffs: () => { dispatch(fetchStaff())},
+    fetchDepartments: () => { dispatch(fetchDepartment())}
+  });
+
 class Main extends Component {
+
+  componentDidMount() {
+    this.props.fetchStaffs();
+    this.props.fetchDepartments();
+  }
+
   render(){
+
+    const StaffListPage = () => {
+      return(
+          <StaffList
+              staffs={this.props.staffs.staffs}
+              staffsLoading={this.props.staffs.isLoading}
+              staffsErrMess={this.props.staffs.errMess}
+              department={this.props.departments.departments}
+          />
+      );
+    }
+
+    const DepartmentsPage = () => {
+      return(
+          <DepartmentList
+          department={this.props.departments.departments}
+          departmentsLoading={this.props.departments.isLoading}
+          departmentsErrMess={this.props.departments.errMess}
+          />
+      );
+    }
+
+    const SalaryPage = () => {
+      return(
+          <SalaryList
+              staffs={this.props.staffs.staffs}
+              staffsLoading={this.props.staffs.isLoading}
+              staffsErrMess={this.props.staffs.errMess}
+              department={this.props.departments.departments}
+          />
+      );
+    }
 
     const child=({ match })=> {
       return(
-        <StaffDetail staff={this.props.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))} />
+        <StaffDetail
+        staff={this.props.staffs.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))}
+        staffsLoading={this.props.staffs.isLoading}
+        staffsErrMess={this.props.staffs.errMess}
+        department={this.props.departments.departments}
+        />
       )
     }
 
@@ -34,11 +84,11 @@ class Main extends Component {
         <Header />{console.log(this.props)}
 
         <Switch>
-          <Route exact path="/" component={()=><StaffList staffs={this.props.staffs} department={this.props.departments}/>} />
+          <Route exact path="/" component={StaffListPage} />
           <Route path="/nhan-vien/:idStaff" component={child} />
-          <Route path="/nhan-vien" component={()=><StaffList staffs={this.props.staffs} department={this.props.departments} />} />
-          <Route path="/phong-ban" component={()=><DepartmentList department={this.props.departments}/>} />
-          <Route path="/bang-luong" component={()=><SalaryList staffs={this.props.staffs}/>} />
+          <Route path="/nhan-vien" component={StaffListPage} />
+          <Route path="/phong-ban" component={DepartmentsPage} />
+          <Route path="/bang-luong" component={SalaryPage}/>
           <Redirect to="/" />
         </Switch>
         <Footer />
@@ -47,4 +97,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

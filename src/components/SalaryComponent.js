@@ -2,9 +2,23 @@ import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem,Button,But
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import { Loading } from './LoadingComponent';
 
-function RenderStaff({staff}){
+function RenderStaff({staff,isLoading, errMess}){
+  if (isLoading) {
+        return(
+              <Loading />
+        );
+    }
+    else if (errMess) {
+        return(
+              <h4>{errMess}</h4>
+        );
+    }
   return (
+    <React.Fragment>
+
+    {staff.map(staff =>(
     <div id="item" className="col-12 col-lg-4 col-md-5">
       <Card >
         <CardTitle tag="h3">{staff.name}</CardTitle>
@@ -18,13 +32,16 @@ function RenderStaff({staff}){
         </CardFooter>
       </Card>
     </div>
-  );
+  ))}
+  </React.Fragment>
+);
+
 }
 
 const SalaryList = (props) => {
 
   const [data,setData] = useState(props.staffs)
-  
+
   function handleSort(selectedType){
     setData(
       data.slice().sort((a,b) =>{
@@ -66,11 +83,11 @@ const SalaryList = (props) => {
       </ButtonGroup>
 
        <div className="row">
-       {data.map(staff =>(
         <RenderStaff
-          staff={staff}
+          staff={data}
+          isLoading={props.staffsLoading}
+          errMess={props.staffsErrMess}
         />
-      ))}
        </div>
      </div>
   )

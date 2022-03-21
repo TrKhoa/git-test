@@ -3,9 +3,40 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
+import {Loading} from './LoadingComponent';
 
-function Info({data}){
+function Info({data, isLoading, errMess}){
+  if (isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (errMess) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <h4>{errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
   return(
+    <React.Fragment>
+    <Breadcrumb>
+      <BreadcrumbItem>
+        <Link to="/Nhan-vien">
+          Nhân viên
+        </Link>
+      </BreadcrumbItem>
+      <BreadcrumbItem active tag="span">
+        {data.name}
+      </BreadcrumbItem>
+    </Breadcrumb>
+
     <div className="row">
       <div id="item" className="col-12 col-lg-3 col-md-4">
 
@@ -26,26 +57,17 @@ function Info({data}){
         </Card>
       </div>
     </div>
+    </React.Fragment>
   )
 }
+
 
 const StaffDetail = (props) =>{
     const staff = props.staff[0];
     return (
       <div>
 
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <Link to="/Nhan-vien">
-            Nhân viên
-          </Link>
-        </BreadcrumbItem>
-        <BreadcrumbItem active tag="span">
-          {staff.name}
-        </BreadcrumbItem>
-      </Breadcrumb>
-
-      <Info data={staff} />
+      <Info data={staff} isLoading={props.staffsLoading} errMess={props.errMess} />
       </div>
     )
 }
