@@ -76,25 +76,22 @@ export default function StaffList(prop){
     setModalStatus(!modalStatus);
   }
 
-  const handleSubmitForm = (e) => {
-        setModalStatus(!modalStatus);
-        let id = {id:Object.keys(prop.staffs).length};
-        let image = {image: "/assets/images/alberto.png"};
-        let transfer = Object.assign(id,e,image);
-        var action = {
-          type: 'ADD_STAFF',
-          payload: JSON.stringify(transfer)
-        };
 
-      //  configureStore().dispatch(action);
-  }
 
-  const RenderStaffAdd = (contain) =>{
+  const RenderStaffAdd = ({contain,addStaff}) =>{
+
+    const handleSubmitForm = (e) => {
+          setModalStatus(!modalStatus);
+          let id = Object.keys(prop.staffs).length;
+          let image = "/assets/images/alberto.png";
+          addStaff(id, e.name, e.dob, e.salaryScale, e.startDate, e.department, e.annualLeave, e.overTime, image)
+    }
+
     return(
       <React.Fragment>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>
         <ModalBody>
-        <LocalForm onSubmit={(values) => handleSubmitForm(values)}>
+        <LocalForm model="addStaff" onSubmit={(values) => handleSubmitForm(values)}>
 
           <Row className="form-group">
               <Label htmlFor="name" md={2}>Tên</Label>
@@ -138,7 +135,7 @@ export default function StaffList(prop){
                       className="form-control"
                       validators={{ required  }}>
                   <option key="0" value="0" selected="selected">-------Chọn phòng ban----------</option>
-                      {prop.department.map((val) =>
+                      {contain.map((val) =>
                           <option key={val.id} value={JSON.stringify(val)}>{val.name}</option>
                       )}
                   </Control.select>
@@ -202,7 +199,7 @@ export default function StaffList(prop){
         </form>
       </div>
       <Modal isOpen={modalStatus} size="lg" toggle={() => setModalStatus(!modalStatus)}>
-        <RenderStaffAdd contain={prop.departments} />
+        <RenderStaffAdd contain={prop.department} addStaff={prop.addStaff}/>
       </Modal>
 
        <div className="row">
@@ -213,7 +210,7 @@ export default function StaffList(prop){
             search={search}
            />
        </div>
-       
+
      </div>
   )
 }

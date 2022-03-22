@@ -5,7 +5,7 @@ import { DEPARTMENTS } from '../shared/staffs';
 export const addStaff = (staffId, name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => ({
     type: ActionTypes.ADD_STAFF,
     payload: {
-        staffId: staffId,
+        id: staffId,
         name: name,
         dob: dob,
         salaryScale: salaryScale,
@@ -13,7 +13,7 @@ export const addStaff = (staffId, name, dob, salaryScale, startDate, department,
         department: department,
         annualLeave: annualLeave,
         overTime: overTime,
-        image: '/assets/images/alberto.png'
+        image: image
       }
 });
 

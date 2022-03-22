@@ -12,10 +12,9 @@ import DepartmentList from '../components/DepartmentComponent';
 import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
 
-import { fetchStaff, fetchDepartment } from '../redux/ActionCreators';
+import { addStaff,fetchStaff, fetchDepartment } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
-  console.log(state.staffs);
   return {
     staffs: state.staffs,
     departments: state.departments
@@ -24,7 +23,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     fetchStaffs: () => { dispatch(fetchStaff())},
-    fetchDepartments: () => { dispatch(fetchDepartment())}
+    fetchDepartments: () => { dispatch(fetchDepartment())},
+    addStaff : (staffId, name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => dispatch(addStaff(staffId, name, dob, salaryScale, startDate, department, annualLeave, overTime, image)),
   });
 
 class Main extends Component {
@@ -43,6 +43,7 @@ class Main extends Component {
               staffsLoading={this.props.staffs.isLoading}
               staffsErrMess={this.props.staffs.errMess}
               department={this.props.departments.departments}
+              addStaff={this.props.addStaff}
           />
       );
     }
