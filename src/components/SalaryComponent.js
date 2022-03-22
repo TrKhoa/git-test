@@ -1,6 +1,7 @@
 import { Card,CardTitle,CardText,CardFooter,Breadcrumb,BreadcrumbItem,Button,ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import { FadeTransform } from 'react-animation-components';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Loading } from './LoadingComponent';
 
@@ -20,6 +21,11 @@ function RenderStaff({staff,isLoading, errMess}){
 
     {staff.map(staff =>(
     <div id="item" className="col-12 col-lg-4 col-md-5">
+    <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
       <Card >
         <CardTitle tag="h3">{staff.name}</CardTitle>
         <CardText className="text-left">
@@ -31,6 +37,7 @@ function RenderStaff({staff,isLoading, errMess}){
           Lương: {parseInt(staff.salaryScale)*3000000+parseInt(staff.overTime)*200000}
         </CardFooter>
       </Card>
+    </FadeTransform>
     </div>
   ))}
   </React.Fragment>

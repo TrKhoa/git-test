@@ -1,5 +1,6 @@
 import { Card,CardTitle,CardText } from 'reactstrap';
 import React from 'react';
+import { FadeTransform } from 'react-animation-components';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Loading} from './LoadingComponent';
 
@@ -25,10 +26,16 @@ const RenderDepartment = ({departments,isLoading,errMess}) =>{
   return (
     departments.map(data => (
     <div id="item" className="col-12 col-lg-3 col-md-5 m-lg-2">
+    <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
       <Card body key={data.id} outline="false">
         <CardTitle tag="h3">{data.name}</CardTitle>
         <CardText className="text-left">Số lượng nhân viên:{data.numberOfStaff}</CardText>
       </Card>
+    </FadeTransform>
     </div>)))
 }
 

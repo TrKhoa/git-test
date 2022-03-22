@@ -1,6 +1,7 @@
 import { Card,CardTitle,CardText,CardImg,CardBody,Breadcrumb,BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import { FadeTransform } from 'react-animation-components';
 import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 import {Loading} from './LoadingComponent';
@@ -37,6 +38,11 @@ function Info({data, departments, isStaffsLoading, errMessStaffs, isDepartmentsL
       </BreadcrumbItem>
     </Breadcrumb>
 
+    <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
     <div className="row">
       <div id="item" className="col-12 col-lg-3 col-md-4">
 
@@ -57,6 +63,7 @@ function Info({data, departments, isStaffsLoading, errMessStaffs, isDepartmentsL
         </Card>
       </div>
     </div>
+    </FadeTransform>
     </React.Fragment>
   )
 }

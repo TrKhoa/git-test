@@ -1,4 +1,5 @@
 import React,{ useState } from 'react';
+import { FadeTransform } from 'react-animation-components';
 import { Card,CardTitle,CardImg,Row, Col,InputGroup,Input,Label,Button,
   Modal,ModalHeader,ModalBody } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -28,12 +29,18 @@ const RenderStaff = ({data, isLoading, errMess, search}) =>{
       }
     }).map((data) =>(
       <div id="item" className="col-6 col-lg-2 col-md-4">
+      <FadeTransform
+          in
+          transformProps={{
+              exitTransform: 'scale(0.5) translateY(-50%)'
+          }}>
         <Link to={`/nhan-vien/${data.id}`}>
           <Card key={data.id} >
             <CardImg src={"../"+data.image}/>
             <CardTitle >{data.name}</CardTitle>
           </Card>
         </Link>
+      </FadeTransform>
       </div>
     ))}
     </React.Fragment>
@@ -75,8 +82,6 @@ export default function StaffList(prop){
   const toggleModal = () => {
     setModalStatus(!modalStatus);
   }
-
-
 
   const RenderStaffAdd = ({contain,postStaff}) =>{
 
