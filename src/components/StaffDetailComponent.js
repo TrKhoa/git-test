@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 import {Loading} from './LoadingComponent';
 
-function Info({data, isLoading, errMess}){
-  if (isLoading) {
+function Info({data, departments, isStaffsLoading, errMessStaffs, isDepartmentsLoading, errMessDepartments}){
+  if (isStaffsLoading || isDepartmentsLoading) {
             return(
                 <div className="container">
                     <div className="row">
@@ -15,11 +15,11 @@ function Info({data, isLoading, errMess}){
                 </div>
             );
         }
-        else if (errMess) {
+        else if (errMessStaffs || errMessDepartments) {
             return(
                 <div className="container">
                     <div className="row">
-                        <h4>{errMess}</h4>
+                        <h4>{errMessStaffs ? errMessStaffs : errMessDepartments}</h4>
                     </div>
                 </div>
             );
@@ -49,7 +49,7 @@ function Info({data, isLoading, errMess}){
             <CardText>
               Ngày sinh: {dateFormat(data.doB, "dd/mm/yyyy")}<br />
               Ngày vào công ty: {dateFormat(data.startDate, "dd/mm/yyyy")}<br />
-              Phòng ban: {data.department.id ? data.department.name : JSON.parse(data.department).name}<br />
+              Phòng ban: {departments !== '' ? departments[data.department].name : "n"}<br />
               Số ngày nghỉ còn lại: {data.annualLeave}<br />
               Số ngày đã làm thêm: {data.overTime}
             </CardText>
@@ -67,7 +67,10 @@ const StaffDetail = (props) =>{
     return (
       <div>
 
-      <Info data={staff} isLoading={props.staffsLoading} errMess={props.errMess} />
+      <Info data={staff} departments={props.departments}
+      isStaffsLoading={props.staffsLoading} errMessStaffs={props.errMess}
+      isDepartmentsLoading={props.staffsLoading} errMessDepartments={props.errMess}
+       />
       </div>
     )
 }

@@ -78,20 +78,20 @@ export default function StaffList(prop){
 
 
 
-  const RenderStaffAdd = ({contain,addStaff}) =>{
+  const RenderStaffAdd = ({contain,postStaff}) =>{
 
     const handleSubmitForm = (e) => {
           setModalStatus(!modalStatus);
           let id = Object.keys(prop.staffs).length;
           let image = "/assets/images/alberto.png";
-          addStaff(id, e.name, e.dob, e.salaryScale, e.startDate, e.department, e.annualLeave, e.overTime, image)
+          postStaff(id, e.name, e.dob, e.salaryScale, e.startDate, e.department, e.annualLeave, e.overTime, image)
     }
 
     return(
       <React.Fragment>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>
         <ModalBody>
-        <LocalForm model="addStaff" onSubmit={(values) => handleSubmitForm(values)}>
+        <LocalForm model="postStaff" onSubmit={(values) => handleSubmitForm(values)}>
 
           <Row className="form-group">
               <Label htmlFor="name" md={2}>Tên</Label>
@@ -136,7 +136,7 @@ export default function StaffList(prop){
                       validators={{ required  }}>
                   <option key="0" value="0" selected="selected">-------Chọn phòng ban----------</option>
                       {contain.map((val) =>
-                          <option key={val.id} value={JSON.stringify(val)}>{val.name}</option>
+                          <option key={val.id} value={parseInt(val.id.slice(-2))-1}>{val.name}</option>
                       )}
                   </Control.select>
                   <RenderError model=".department" />
@@ -199,7 +199,7 @@ export default function StaffList(prop){
         </form>
       </div>
       <Modal isOpen={modalStatus} size="lg" toggle={() => setModalStatus(!modalStatus)}>
-        <RenderStaffAdd contain={prop.department} addStaff={prop.addStaff}/>
+        <RenderStaffAdd contain={prop.department} postStaff={prop.postStaff}/>
       </Modal>
 
        <div className="row">

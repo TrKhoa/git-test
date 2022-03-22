@@ -1,29 +1,74 @@
 import * as ActionTypes from './ActionTypes';
 import { STAFFS } from '../shared/staffs';
 import { DEPARTMENTS } from '../shared/staffs';
+import { baseUrl } from '../shared/baseUrl';
 
-export const addStaff = (staffId, name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => ({
+export const addStaff = (staff) => ({
     type: ActionTypes.ADD_STAFF,
-    payload: {
-        id: staffId,
-        name: name,
-        dob: dob,
-        salaryScale: salaryScale,
-        startDate: startDate,
-        department: department,
-        annualLeave: annualLeave,
-        overTime: overTime,
-        image: image
-      }
+    payload: staff
 });
+
+export const postStaff = (staffId, name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => (dispatch) => {
+
+  const newStaff = {
+    id: staffId,
+    name: name,
+    dob: dob,
+    salaryScale: salaryScale,
+    startDate: startDate,
+    department: department,
+    annualLeave: annualLeave,
+    overTime: overTime,
+    image: image
+  };
+
+  return fetch(baseUrl + 'staffs', {
+      method: "POST",
+      body: JSON.stringify(newStaff),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+  })
+  .then(response =>{
+    if (response.ok) {
+      return response;
+    } else {
+    var error = new Error('Error' + response.status + ':' + response.statusText);
+    error.response = response;
+    throw error;
+  }
+  },
+    error => {
+          throw error;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addStaff(response)))
+    .catch(error =>  {alert('Your comment could not be posted\nError: '+error.message); });
+};
 
 export const fetchStaff = () => (dispatch) => {
 
     dispatch(staffsLoading(true));
 
-    setTimeout(() => {
-        dispatch(addStaffs(STAFFS));
-    }, 2000);
+    return fetch(baseUrl + 'staffs')
+    .then(response => {
+        if (response.ok) {
+          console.log(response);
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(response => response.json())
+    .then(staffs => dispatch(addStaffs(staffs)))
+    .catch(error => dispatch(staffsFailed(error.message)));
 }
 
 export const staffsLoading = () => ({
@@ -40,13 +85,28 @@ export const addStaffs = (staffs) => ({
     payload: staffs
 });
 
+
 export const fetchDepartment = () => (dispatch) => {
 
     dispatch(departmentsLoading(true));
 
-    setTimeout(() => {
-        dispatch(addDepartments(DEPARTMENTS));
-    }, 2000);
+    return fetch(baseUrl + 'departments')
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(response => response.json())
+    .then(departments => dispatch(addDepartments(departments)))
+    .catch(error => dispatch(departmentsFailed(error.message)));
 }
 
 export const departmentsLoading = () => ({
