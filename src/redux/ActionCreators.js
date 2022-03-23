@@ -10,10 +10,10 @@ export const postStaff = (name, dob, salaryScale, startDate, department, annualL
 
   const newStaff = {
     name: name,
-    dob: dob,
+    doB: dob,
     salaryScale: salaryScale,
     startDate: startDate,
-    department: department,
+    departmentId: department,
     annualLeave: annualLeave,
     overTime: overTime,
     image: image
@@ -81,7 +81,6 @@ export const addStaffs = (staffs) => ({
     type: ActionTypes.ADD_STAFFS,
     payload: staffs
 });
-
 
 export const fetchDepartment = () => (dispatch) => {
 
