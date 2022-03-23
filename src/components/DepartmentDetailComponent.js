@@ -34,7 +34,7 @@ const DepartmentDetail = (props) => {
   if (props.staff != null && props.department !=null) {
     return (
       <div className="container">
-      <Breadcrumb>
+      <Breadcrumb>{console.log(props)}
         <BreadcrumbItem>
           <Link to="/departments">Phòng ban</Link>
         </BreadcrumbItem>

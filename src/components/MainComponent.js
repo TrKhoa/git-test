@@ -88,7 +88,7 @@ class Main extends Component {
 
       return(
         <DepartmentDetail
-        staff={this.props.staffs.staffs.filter((staff) => staff.department===match.params.idDepartment)}
+        staff={this.props.staffs.staffs.filter((staff) => staff.departmentId===match.params.idDepartment)}
         department={this.props.departments.departments.filter((departments) => departments.id===match.params.idDepartment)[0]}
         />
       )

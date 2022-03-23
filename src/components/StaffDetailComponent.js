@@ -38,8 +38,7 @@ function Info({data, departments}){
             <CardText>
               Ngày sinh: {dateFormat(data.doB, "dd/mm/yyyy")}<br />
               Ngày vào công ty: {dateFormat(data.startDate, "dd/mm/yyyy")}<br />
-              Phòng ban: {departments.filter((val)=>val.id==data.department)[0] !== undefined
-                ? departments.filter((val)=>val.id==data.department)[0].name : ""}<br />
+              Phòng ban: {departments !== undefined ? departments.filter((val)=>val.id==data.departmentId)[0].name : ""}<br />
               Số ngày nghỉ còn lại: {data.annualLeave}<br />
               Số ngày đã làm thêm: {data.overTime}
             </CardText>
