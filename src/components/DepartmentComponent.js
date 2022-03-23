@@ -1,4 +1,4 @@
-import { Card,CardTitle,CardText } from 'reactstrap';
+import { Card,CardTitle } from 'reactstrap';
 import React from 'react';
 import { FadeTransform } from 'react-animation-components';
 import { Link } from 'react-router-dom';
@@ -34,7 +34,6 @@ const RenderDepartment = ({departments,isLoading,errMess}) =>{
       <Link to={`/phong-ban/${data.id}`}>
       <Card body key={data.id} outline="false">
         <CardTitle tag="h3">{data.name}</CardTitle>
-        <CardText className="text-left">Số lượng nhân viên:{data.numberOfStaff}</CardText>
       </Card>
       </Link>
     </FadeTransform>
