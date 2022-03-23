@@ -9,6 +9,7 @@ import Header from '../components/HeaderComponent';
 import StaffList from '../components/StaffListComponent';
 import StaffDetail from '../components/StaffDetailComponent';
 import DepartmentList from '../components/DepartmentComponent';
+import DepartmentDetail from '../components/DepartmentDetailComponent';
 import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
 
@@ -70,6 +71,7 @@ class Main extends Component {
     }
 
     const child=({ match })=> {
+
       return(
         <StaffDetail
         staff={this.props.staffs.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))}
@@ -82,14 +84,25 @@ class Main extends Component {
       )
     }
 
+    const departmentChild=({ match })=> {
+
+      return(
+        <DepartmentDetail
+        staff={this.props.staffs.staffs.filter((staff) => staff.department===match.params.idDepartment)}
+        department={this.props.departments.departments.filter((departments) => departments.id===match.params.idDepartment)[0]}
+        />
+      )
+    }
+
     return (
       <div className="container-xl ">
-        <Header />{console.log(this.props)}
+        <Header />
 
         <Switch>
           <Route exact path="/" component={StaffListPage} />
           <Route path="/nhan-vien/:idStaff" component={child} />
           <Route path="/nhan-vien" component={StaffListPage} />
+          <Route path="/phong-ban/:idDepartment" component={departmentChild} />
           <Route path="/phong-ban" component={DepartmentsPage} />
           <Route path="/bang-luong" component={SalaryPage}/>
           <Redirect to="/" />

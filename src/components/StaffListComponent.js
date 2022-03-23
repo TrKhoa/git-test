@@ -87,9 +87,8 @@ export default function StaffList(prop){
 
     const handleSubmitForm = (e) => {
           setModalStatus(!modalStatus);
-          let id = Object.keys(prop.staffs).length;
           let image = "/assets/images/alberto.png";
-          postStaff(id, e.name, e.dob, e.salaryScale, e.startDate, e.department, e.annualLeave, e.overTime, image)
+          postStaff( e.name, e.dob, e.salaryScale, e.startDate, e.department, e.annualLeave, e.overTime, image)
     }
 
     return(
@@ -141,7 +140,7 @@ export default function StaffList(prop){
                       validators={{ required  }}>
                   <option key="0" value="0" selected="selected">-------Chọn phòng ban----------</option>
                       {contain.map((val) =>
-                          <option key={val.id} value={parseInt(val.id.slice(-2))-1}>{val.name}</option>
+                          <option key={val.id} value={val.id}>{val.name}</option>
                       )}
                   </Control.select>
                   <RenderError model=".department" />

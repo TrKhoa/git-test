@@ -6,10 +6,9 @@ export const addStaff = (staff) => ({
     payload: staff
 });
 
-export const postStaff = (staffId, name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => (dispatch) => {
+export const postStaff = (name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => (dispatch) => {
 
   const newStaff = {
-    id: staffId,
     name: name,
     dob: dob,
     salaryScale: salaryScale,

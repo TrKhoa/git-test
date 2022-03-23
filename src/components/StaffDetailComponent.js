@@ -6,25 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import dateFormat from 'dateformat';
 import {Loading} from './LoadingComponent';
 
-function Info({data, departments, isStaffsLoading, errMessStaffs, isDepartmentsLoading, errMessDepartments}){
-  if (isStaffsLoading || isDepartmentsLoading) {
-            return(
-                <div className="container">
-                    <div className="row">
-                        <Loading />
-                    </div>
-                </div>
-            );
-        }
-        else if (errMessStaffs || errMessDepartments) {
-            return(
-                <div className="container">
-                    <div className="row">
-                        <h4>{errMessStaffs ? errMessStaffs : errMessDepartments}</h4>
-                    </div>
-                </div>
-            );
-        }
+function Info({data, departments}){
+  if(data !==undefined && departments !==null){
   return(
     <React.Fragment>
     <Breadcrumb>
@@ -55,7 +38,8 @@ function Info({data, departments, isStaffsLoading, errMessStaffs, isDepartmentsL
             <CardText>
               Ngày sinh: {dateFormat(data.doB, "dd/mm/yyyy")}<br />
               Ngày vào công ty: {dateFormat(data.startDate, "dd/mm/yyyy")}<br />
-              Phòng ban: {departments !== '' ? departments[data.department].name : "n"}<br />
+              Phòng ban: {departments.filter((val)=>val.id==data.department)[0] !== undefined
+                ? departments.filter((val)=>val.id==data.department)[0].name : ""}<br />
               Số ngày nghỉ còn lại: {data.annualLeave}<br />
               Số ngày đã làm thêm: {data.overTime}
             </CardText>
@@ -67,6 +51,7 @@ function Info({data, departments, isStaffsLoading, errMessStaffs, isDepartmentsL
     </React.Fragment>
   )
 }
+else return <Loading />}
 
 
 const StaffDetail = (props) =>{
@@ -74,10 +59,7 @@ const StaffDetail = (props) =>{
     return (
       <div>
 
-      <Info data={staff} departments={props.departments}
-      isStaffsLoading={props.staffsLoading} errMessStaffs={props.errMess}
-      isDepartmentsLoading={props.staffsLoading} errMessDepartments={props.errMess}
-       />
+      <Info data={staff} departments={props.departments} />
       </div>
     )
 }
