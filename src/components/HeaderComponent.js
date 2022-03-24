@@ -7,8 +7,8 @@ export default function Header(){
 
   return(
     <Navbar color="primary" expand="md" dark>
-        <NavbarBrand className="text-white" to="/">
-           Khoa
+        <NavbarBrand className="text-white" >
+           <NavLink className="text-white" to="/">Khoa</NavLink>
         </NavbarBrand>
         <NavbarToggler onClick={() => setNavState(!navState)} />
           <Collapse isOpen={navState} navbar>

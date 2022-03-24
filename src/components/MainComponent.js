@@ -13,6 +13,7 @@ import DepartmentDetail from '../components/DepartmentDetailComponent';
 import SalaryList from '../components/SalaryComponent';
 import Footer from '../components/FooterComponent';
 
+//import actions
 import { postStaff,fetchStaff, fetchDepartment } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
@@ -30,6 +31,7 @@ const mapDispatchToProps = dispatch => ({
 
 class Main extends Component {
 
+  //chạy khi đã hiển thị component
   componentDidMount() {
     this.props.fetchStaffs();
     this.props.fetchDepartments();
@@ -37,6 +39,7 @@ class Main extends Component {
 
   render(){
 
+    //Đưa data vào các page
     const StaffListPage = () => {
       return(
           <StaffList
@@ -70,16 +73,13 @@ class Main extends Component {
       );
     }
 
+    //Dùng match với trang chi tiết nhân viên và chi tiết phòng ban
     const child=({ match })=> {
 
       return(
         <StaffDetail
         staff={this.props.staffs.staffs.filter((staff) => staff.id===parseInt(match.params.idStaff))}
-        staffsLoading={this.props.staffs.isLoading}
-        staffsErrMess={this.props.staffs.errMess}
         departments={this.props.departments.departments}
-        departmentsLoading={this.props.departments.isLoading}
-        departmentsErrMess={this.props.departments.errMess}
         />
       )
     }
@@ -88,8 +88,8 @@ class Main extends Component {
 
       return(
         <DepartmentDetail
-        staff={this.props.staffs.staffs.filter((staff) => staff.departmentId===match.params.idDepartment)}
-        department={this.props.departments.departments.filter((departments) => departments.id===match.params.idDepartment)[0]}
+        staff={this.props.staffs.staffs.filter((staff) => staff.departmentId === match.params.idDepartment)}
+        department={this.props.departments.departments.filter((val) => val.id === match.params.idDepartment)[0]}
         />
       )
     }
@@ -98,6 +98,7 @@ class Main extends Component {
       <div className="container-xl ">
         <Header />
 
+        {/*Url*/}
         <Switch>
           <Route exact path="/" component={StaffListPage} />
           <Route path="/nhan-vien/:idStaff" component={child} />
@@ -107,6 +108,7 @@ class Main extends Component {
           <Route path="/bang-luong" component={SalaryPage}/>
           <Redirect to="/" />
         </Switch>
+
         <Footer />
       </div>
     );

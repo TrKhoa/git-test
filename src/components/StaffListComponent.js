@@ -8,39 +8,34 @@ import { Loading } from './LoadingComponent';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
+//Tạo Render
 const RenderStaff = ({data, isLoading, errMess, search}) =>{
-  if (isLoading) {
-        return(
-              <Loading />
-        );
-    }
-    else if (errMess) {
-        return(
-              <h4>{errMess}</h4>
-        );
-    }
+  //Kiểm tra điều kiện và trả kết quả
+  if (isLoading) //Nếu không có data
+    return <Loading />
+  else if (errMess) //Nếu có lỗi
+    return <h4 className="container">{errMess}</h4>
+
+  //Render khi nhận data
   return (
     <React.Fragment>
+    {/*Xử lí phần search*/}
     { data.filter((val) => {
-      if(search===""){
+      if(search==="" || val==undefined){
         return val
-      } else if (val.name.toLowerCase().includes(search.toLowerCase())){
+      } else if (val.name!==undefined && val.name.toLowerCase().includes(search.toLowerCase())){
         return val
       }
     }).map((data) =>(
       <div id="item" className="col-6 col-lg-2 col-md-4">
-      <FadeTransform
-          in
-          transformProps={{
-              exitTransform: 'scale(0.5) translateY(-50%)'
-          }}>
-        <Link to={`/nhan-vien/${data.id}`}>
-          <Card key={data.id} >
-            <CardImg src={"../"+data.image}/>
-            <CardTitle >{data.name}</CardTitle>
-          </Card>
-        </Link>
-      </FadeTransform>
+        <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}> {/*Hiệu ứng*/}
+          <Link to={`/nhan-vien/${data.id}`}>
+            <Card key={data.id} >
+              <CardImg src={"../"+data.image}/>
+              <CardTitle >{data.name}</CardTitle>
+            </Card>
+          </Link>
+        </FadeTransform>
       </div>
     ))}
     </React.Fragment>
@@ -48,11 +43,13 @@ const RenderStaff = ({data, isLoading, errMess, search}) =>{
 
 }
 
+//Điều kiện xác minh
 const required = value => value && value.length;
 const minLength = min => value => (value && value.length >= min) || !value;
 const maxLength = max => value => (value && value.length <= max) || !value;
 const minValue = min => value => (value && value >= min) || !value;
 
+//Render phần báo lỗi
 const RenderError = ({model}) => {
   return(
     <Errors
@@ -69,8 +66,10 @@ const RenderError = ({model}) => {
   )
 }
 
+//Render
 export default function StaffList(prop){
 
+  //Khai báo lưu trữ cho search
   const [search,setSearch] = useState("");
   const [modalStatus,setModalStatus] = useState(false);
 
@@ -91,6 +90,7 @@ export default function StaffList(prop){
           postStaff( e.name, e.dob, e.salaryScale, e.startDate, e.department, e.annualLeave, e.overTime, image)
     }
 
+    //Khai báo form thêm nhân viên
     return(
       <React.Fragment>
         <ModalHeader toggle={toggleModal}>Login</ModalHeader>
@@ -189,7 +189,6 @@ export default function StaffList(prop){
     )
   }
 
-
   return (
 
     <div>
@@ -202,6 +201,7 @@ export default function StaffList(prop){
           </InputGroup>
         </form>
       </div>
+
       <Modal isOpen={modalStatus} size="lg" toggle={() => setModalStatus(!modalStatus)}>
         <RenderStaffAdd contain={prop.department} postStaff={prop.postStaff}/>
       </Modal>
