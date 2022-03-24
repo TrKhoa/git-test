@@ -5,27 +5,20 @@ import { FadeTransform } from 'react-animation-components';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Loading } from './LoadingComponent';
 
+//Tạo Render
 function RenderStaff({staff,isLoading, errMess}){
-  if (isLoading) {
-        return(
-              <Loading />
-        );
-    }
-    else if (errMess) {
-        return(
-              <h4>{errMess}</h4>
-        );
-    }
+  //Kiểm tra điều kiện và trả kết quả
+  if (isLoading) //Nếu không có data
+    return <Loading />
+  else if (errMess) //Nếu có lỗi
+    return <h4 className="container">{errMess}</h4>
+
+  //Render khi nhận data
   return (
     <React.Fragment>
-
     {staff.map(staff =>(
     <div id="item" className="col-12 col-lg-4 col-md-5">
-    <FadeTransform
-        in
-        transformProps={{
-            exitTransform: 'scale(0.5) translateY(-50%)'
-        }}>
+    <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}> {/*Hiệu ứng*/}
       <Card >
         <CardTitle tag="h3">{staff.name}</CardTitle>
         <CardText className="text-left">
@@ -45,29 +38,25 @@ function RenderStaff({staff,isLoading, errMess}){
 
 }
 
+//Render
 const SalaryList = (props) => {
 
-  const [data,setData] = useState(props.staffs)
+  const [data,setData] = useState(props.staffs) //Khai báo hàm sắp xếp
 
+  //Hàm xử lí sắp xếp
   function handleSort(selectedType){
     setData(
       data.slice().sort((a,b) =>{
         switch (selectedType) {
           case 1:
-            if(a.name < b.name){
+            if(a.name < b.name)
               return 1
-            }else {
-              return -1
-            }
-            break;
+            return -1
           default:
-            if(a.name > b.name){
+            if(a.name > b.name)
               return 1
-            }else {
-              return -1
-            }
-        }
-      }))}
+            return -1
+        }}))}
 
   return (
     <div>
@@ -84,6 +73,7 @@ const SalaryList = (props) => {
       </BreadcrumbItem>
     </Breadcrumb>
 
+      {/*Nút sắp xếp*/}
       <ButtonGroup>
         <Button onClick={() => handleSort(0)}>Mặc định</Button>
         <Button onClick={() => handleSort(1)}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>

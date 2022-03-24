@@ -4,14 +4,10 @@ import { Link } from "react-router-dom";
 import { FadeTransform } from "react-animation-components";
 import { Loading } from './LoadingComponent';
 
+//Tạo render
 const RenderStaffItem = ({ staff }) => {
   return (
-    <FadeTransform
-      in
-      transformProps={{
-        exitTransform: "scale(0.5) translateY(-50%)"
-      }}
-    >
+    <FadeTransform in transformProps={{exitTransform: 'scale(0.5) translateY(-50%)'}}> {/*Hiệu ứng*/}
       <Link to={`/nhan-vien/${staff.id}`}>
         <Card>
           <CardImg width="100%" src={staff.image} alt={staff.name} />
@@ -24,6 +20,7 @@ const RenderStaffItem = ({ staff }) => {
   );
 };
 
+//Render
 const DepartmentDetail = (props) => {
   const staffs = props.staff.map((val) => (
     <div className="col-6 col-md-4 col-lg-2 mt-3 mb-3" key={val.id}>
@@ -34,7 +31,7 @@ const DepartmentDetail = (props) => {
   if (props.staff != null && props.department !=null) {
     return (
       <div className="container">
-      <Breadcrumb>{console.log(props)}
+      <Breadcrumb>
         <BreadcrumbItem>
           <Link to="/departments">Phòng ban</Link>
         </BreadcrumbItem>
@@ -44,7 +41,7 @@ const DepartmentDetail = (props) => {
       </div>
     );
   } else {
-    return <Loading />;
+    return <Loading />; //Trả về Loading khi chưa nhận được dữ liệu
   }
 };
 

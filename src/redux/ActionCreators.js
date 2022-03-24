@@ -1,11 +1,13 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
+//Thêm nhân viên vào render
 export const addStaff = (staff) => ({
     type: ActionTypes.ADD_STAFF,
     payload: staff
 });
 
+//Lấy data vào db
 export const postStaff = (name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => (dispatch) => {
 
   const newStaff = {
@@ -19,6 +21,7 @@ export const postStaff = (name, dob, salaryScale, startDate, department, annualL
     image: image
   };
 
+  //Thêm nhân viên với phương thức POST
   return fetch(baseUrl + 'staffs', {
       method: "POST",
       body: JSON.stringify(newStaff),
@@ -44,6 +47,7 @@ export const postStaff = (name, dob, salaryScale, startDate, department, annualL
     .catch(error =>  {alert('Your comment could not be posted\nError: '+error.message); });
 };
 
+//Lấy data Nhân viên
 export const fetchStaff = () => (dispatch) => {
 
     dispatch(staffsLoading(true));
@@ -51,7 +55,6 @@ export const fetchStaff = () => (dispatch) => {
     return fetch(baseUrl + 'staffs')
     .then(response => {
         if (response.ok) {
-          console.log(response);
           return response;
         } else {
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
@@ -64,24 +67,22 @@ export const fetchStaff = () => (dispatch) => {
             throw errmess;
       })
     .then(response => response.json())
-    .then(staffs => dispatch(addStaffs(staffs)))
+    .then(staff => dispatch(addStaff(staff)))
     .catch(error => dispatch(staffsFailed(error.message)));
 }
 
+//Loading khi chưa nhận data
 export const staffsLoading = () => ({
     type: ActionTypes.STAFFS_LOADING
 });
 
+//Trả về error
 export const staffsFailed = (errmess) => ({
     type: ActionTypes.STAFFS_FAILED,
     payload: errmess
 });
 
-export const addStaffs = (staffs) => ({
-    type: ActionTypes.ADD_STAFFS,
-    payload: staffs
-});
-
+//Lấy data phòng ban
 export const fetchDepartment = () => (dispatch) => {
 
     dispatch(departmentsLoading(true));
@@ -105,15 +106,18 @@ export const fetchDepartment = () => (dispatch) => {
     .catch(error => dispatch(departmentsFailed(error.message)));
 }
 
+//Loading khi chưa nhận data
 export const departmentsLoading = () => ({
     type: ActionTypes.DEPARTMENTS_LOADING
 });
 
+//Trả về error
 export const departmentsFailed = (errmess) => ({
     type: ActionTypes.DEPARTMENTS_FAILED,
     payload: errmess
 });
 
+//Thêm vào render
 export const addDepartments = (departments) => ({
     type: ActionTypes.ADD_DEPARTMENTS,
     payload: departments
