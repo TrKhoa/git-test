@@ -7,7 +7,7 @@ export const addStaff = (staff) => ({
     payload: staff
 });
 
-//Lấy data vào db
+//Lấy data đưa vào db
 export const postStaff = (name, dob, salaryScale, startDate, department, annualLeave, overTime, image) => (dispatch) => {
 
   const newStaff = {
