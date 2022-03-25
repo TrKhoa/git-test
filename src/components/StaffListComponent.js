@@ -9,7 +9,7 @@ import { Loading } from './LoadingComponent';
 import 'bootstrap/dist/css/bootstrap.css';
 
 //Tạo Render
-const RenderStaff = ({data, isLoading, errMess, search}) =>{
+const RenderStaff = ({data, isLoading, errMess, search, onStaffDelete}) =>{
   //Kiểm tra điều kiện và trả kết quả
   if (isLoading) //Nếu không có data
     return <Loading />
@@ -27,14 +27,15 @@ const RenderStaff = ({data, isLoading, errMess, search}) =>{
         return val
       }
     }).map((data) =>(
-      <div id="item" className="col-6 col-lg-2 col-md-4">
+      <div id="item" className="col-6 col-lg-2 col-md-4 my-2">
         <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}> {/*Hiệu ứng*/}
-          <Link to={`/nhan-vien/${data.id}`}>
-            <Card key={data.id} >
+          <Card key={data.id} >
+            <Link to={`/nhan-vien/${data.id}`}>
               <CardImg src={"../"+data.image}/>
               <CardTitle >{data.name}</CardTitle>
-            </Card>
-          </Link>
+            </Link>
+            <Button className="btn btn-danger" onClick={()=>onStaffDelete(data.id)}>Xóa nhân viên</Button> {/*Nút Xóa nhân viên*/}
+          </Card>
         </FadeTransform>
       </div>
     ))}
@@ -212,6 +213,7 @@ export default function StaffList(prop){
             isLoading={prop.staffsLoading}
             errMess={prop.staffsErrMess}
             search={search}
+            onStaffDelete={prop.onStaffDelete}
            />
        </div>
 

@@ -17,6 +17,11 @@ export const Staffs = (state = { isLoading: true,
         case ActionTypes.ADD_STAFF:
             return {...state, isLoading: false, errMess: null, staffs:action.payload}
 
+        //Xóa nhân viên
+        case ActionTypes.DELETED_STAFF:
+            const Staffs = state.staffs.filter((staff) => staff.id !== action.payload);
+            return {...state, isLoading: false, errMess: null, staffs:Staffs}
+
         //Trả về State
         default:
             return state;
