@@ -76,7 +76,7 @@ const SalaryList = (props) => {
       {/*Nút sắp xếp*/}
       <ButtonGroup>
         <Button onClick={() => handleSort(0)}>Mặc định</Button>
-        <Button onClick={() => handleSort(1)}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> ID</Button>
+        <Button onClick={() => handleSort(1)}><i className="fa fa-sort-amount-desc" aria-hidden="true" /> Ngược lại</Button>
       </ButtonGroup>
 
        <div className="row">
