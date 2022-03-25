@@ -1,8 +1,6 @@
 import React,{ useState } from 'react';
 import { FadeTransform } from 'react-animation-components';
-import { Card,CardTitle,CardImg,Row, Col,InputGroup,Input,Label,Button,
-  Modal,ModalHeader,ModalBody } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Card,CardTitle,CardImg,InputGroup,Input,Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
@@ -21,7 +19,7 @@ const RenderStaff = ({data, isLoading, errMess, search}) =>{
     <React.Fragment>
     {/*Xử lí phần search*/}
     { data.filter((val) => {
-      if(search==="" || val==undefined){
+      if(search==="" || val===undefined){
         return val
       } else if (val.name!==undefined && val.name.toLowerCase().includes(search.toLowerCase())){
         return val
@@ -43,43 +41,15 @@ const RenderStaff = ({data, isLoading, errMess, search}) =>{
 
 }
 
-//Điều kiện xác minh
-const required = value => value && value.length;
-const minLength = min => value => (value && value.length >= min) || !value;
-const maxLength = max => value => (value && value.length <= max) || !value;
-const minValue = min => value => (value && value >= min) || !value;
-
-//Render phần báo lỗi
-const RenderError = ({model}) => {
-  return(
-    <Errors
-      className="text-danger"
-      model={model}
-      show="touched"
-      messages={{
-          required: 'Required',
-          minLength: 'Phải nhiều hơn hoặc bằng 5 kí tự',
-          maxLength: 'Phải ít hơn hoặc bằng 30 kí tự',
-          minValue: 'Giá trị phải lớn hơn hoặc bằng 0'
-      }}
-   />
-  )
-}
-
 //Render
 export default function StaffList(prop){
 
   //Khai báo lưu trữ cho search
   const [search,setSearch] = useState("");
-  const [modalStatus,setModalStatus] = useState(false);
 
   const handleSubmit = (e) =>{
     e.preventDefault();
     setSearch(e.target.search.value);
-  }
-
-  const toggleModal = () => {
-    setModalStatus(!modalStatus);
   }
 
   return (
